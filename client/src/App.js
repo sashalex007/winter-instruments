@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ResponsiveAppBar from './components/navbar'
 import { Box } from '@mui/system';
 import Grid from '@mui/material/Grid';
@@ -22,6 +22,24 @@ let testCart = [
   {id: 3, qty: 3, name: 'Sidewall cutter', price: 30}
 ]
 export default function App() {
+  const [productList, setProductList] = useState();
+  useEffect(() => {
+    fetch('/getproducts')
+      .then((res) => res.json())
+      .then((data) => {
+        const prices = data.prices;
+        let products = data.products;
+        let priceObject = {}
+        prices.forEach(price => {
+          priceObject[price.id] = price.unit_amount/100;
+        })
+        products.forEach(product => {
+          product.unit_amount = priceObject[product.default_price];
+        })
+        setProductList(products);
+      });
+  }, []);
+  
   const [cartData, setCartData] = useState(testCart);
 
   const deleteCartItem = (id) => {
@@ -93,7 +111,7 @@ export default function App() {
                   <Route exact path='/' element={< Catalogue/>}></Route>
                   <Route exact path='/contact' element={< Contact />}></Route>
                   <Route exact path='/cart' element={< Cart cartData={cartData} cartFunctions={cartFunctions}/>}></Route>
-                  <Route exact path='/undersole' element={< UnderSole cartData={cartData} cartFunctions={cartFunctions}/>}></Route>
+                  <Route exact path='/undersole' element={< UnderSole cartData={cartData} cartFunctions={cartFunctions} productList={productList}/>}></Route>
                 </Routes>
               </Router>
 

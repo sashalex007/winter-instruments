@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import { Container } from '@mui/system';
 import getCatalogueData from '../../../staticData/catalogueData'
 
-export default function UnderSole() {
-
+export default function UnderSole(props) {
+    console.log(props.productList)
     let catalogueData = getCatalogueData()
 
     return (
