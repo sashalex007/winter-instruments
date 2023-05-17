@@ -1,0 +1,11 @@
+{
+    "scripts": {
+        "start": "node server/server.js",
+        "devserver": "nodemon server/server.js",
+        "devclient": "cd client && npm start",
+        "build": "cd client && npm install && npm run build && cd ../server && npm install"
+    },
+    "engines": {
+        "node": "16.17.0"
+      }
+}
