@@ -1,0 +1,7 @@
+/node_modules
+client/node_modules
+cilent/build
+server/node_modules
+npm-debug.log
+.DS_Store
+/*.env
