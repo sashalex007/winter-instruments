@@ -1,7 +1,0 @@
-/node_modules
-client/node_modules
-client/build
-server/node_modules
-npm-debug.log
-.DS_Store
-/*.env
