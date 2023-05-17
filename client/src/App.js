@@ -22,7 +22,7 @@ let testCart = [
   {id: 3, qty: 3, name: 'Sidewall cutter', price: 30}
 ]
 export default function App() {
-  const [productList, setProductList] = useState();
+  const [productList, setProductList] = useState([]);
   useEffect(() => {
     fetch('/getproducts')
       .then((res) => res.json())

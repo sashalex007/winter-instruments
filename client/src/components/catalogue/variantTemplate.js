@@ -7,8 +7,8 @@ import Grid from '@mui/material/Grid';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
 
-export default function ProductTemplate(props) {
-    const product = props[1][0]
+export default function variantTemplate(props) {
+    const product = props.product
     console.log(product)
     return (
         <Grid item xs>
