@@ -8,11 +8,18 @@ import ViewCartItem from './viewCartItem';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import { ListItem } from '@mui/material';
+import { Api } from '../../api';
+
 
 
 export default function viewCart(props) {
     const cartData = props.cartData;
     const cartFunctions = props.cartFunctions;
+
+    function checkout() {
+        Api.createCheckoutSession(cartData);
+    }
+
     return (
         <Container>
             <Typography gutterBottom variant="h4" component="div">
@@ -23,7 +30,7 @@ export default function viewCart(props) {
                 <List>
                     {cartData.map(block =>
                         <ViewCartItem
-                            key={block.id}
+                            key={block.price}
                             item={block}
                             cartFunctions={cartFunctions}
                         />)}
@@ -37,7 +44,7 @@ export default function viewCart(props) {
                     </ListItem>
 
                     <ListItem style={{ cursor: 'default' }}>
-                        <Button variant="contained">Checkout</Button>
+                        <Button onClick={checkout} variant="contained">Checkout</Button>
                     </ListItem>
                 </List>
               </Card>          

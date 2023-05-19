@@ -20,27 +20,27 @@ export default function ViewCartItem(props) {
             <ListItemText>
                 <Stack direction="row" spacing={0}>
                     <Minus onClick={() => {
-                        cartFunctions.editQty(item.id, item.qty - 1);
-                        if (item.qty === 0) cartFunctions.deleteCartItem(item.id);
+                        cartFunctions.editQty(item.price, item.quantity - 1);
+                        if (item.quantity === 0) cartFunctions.deleteCartItem(item.price);
                     }} />
                     <span>&nbsp;&nbsp;</span>
-                    {item.qty}
+                    {item.quantity}
                     <span>&nbsp;&nbsp;</span>
                     <Plus onClick={() => {
-                        cartFunctions.editQty(item.id, item.qty + 1);
+                        cartFunctions.editQty(item.price, item.quantity + 1);
                     }} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-                    {item.name} - ${item.price}.00
+                    {item.name} - ${item.unit_amount}.00
                 </Stack>
             </ListItemText>
 
 
             <Delete style={{ cursor: 'pointer' }} onClick={() => {
-                cartFunctions.deleteCartItem(item.id);
+                cartFunctions.deleteCartItem(item.price);
             }}></Delete>
             <Typography variant="body2" color="text.secondary">
-                ${item.price * item.qty}.00
+                ${item.unit_amount * item.quantity}.00
             </Typography>
         </ListItem>
     )

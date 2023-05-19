@@ -11,15 +11,15 @@ export default function CartItem(props) {
     const closeCart = props.closeCart;
     return (
         <MenuItem divider={true} disableRipple style={{ cursor: 'default' }}>
-         <ListItemText>{item.qty}x {item.name}</ListItemText>
+         <ListItemText>{item.quantity}x {item.name}</ListItemText>
         
         <Delete style={{ cursor: 'pointer' }} onClick={() => {
-            cartFunctions.deleteCartItem(item.id);
-            if (cartSize - item.qty === 0 || cartSize === 0) closeCart();
+            cartFunctions.deleteCartItem(item.price);
+            if (cartSize - item.quantity === 0 || cartSize === 0) closeCart();
         }}/>
 
         <Typography variant="body2" color="text.secondary">
-            ${item.price*item.qty}.00
+            ${item.unit_amount*item.quantity}.00
           </Typography>
           </MenuItem>
     )

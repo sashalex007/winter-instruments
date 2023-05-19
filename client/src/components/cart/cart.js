@@ -66,7 +66,7 @@ export default function Cart(props) {
             >
                 {cartData.map(block =>
                     <CartItem
-                        key={block.id}
+                        key={block.price}
                         item={block}
                         cartSize={cartSize}
                         cartFunctions={cartFunctions}

@@ -36,7 +36,7 @@ export default function UnderSole(props) {
 
             <br></br>
             <Grid container spacing={3}>
-                {categoriesList.map(block => ProductTemplate(block))}
+                {categoriesList.map(block => <ProductTemplate productData={block} cartData={props.cartData} cartFunctions={props.cartFunctions} />)}
             </Grid>
             <br></br>
         </Container>
