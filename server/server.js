@@ -18,19 +18,20 @@ async function getProducts() {
   };
 }
 
+//Launch server
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-// Have Node serve the files for our built React app
+//serve static assets 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-// Handle GET requests to /api route
 app.get("/getproducts", (req, res) => {
   getProducts().then((products) => {
     res.json(products);
   })
 });
+
 
 app.post('/create-checkout-session', jsonParser, async (req, res) => {
   let items = req.body;
@@ -38,20 +39,17 @@ app.post('/create-checkout-session', jsonParser, async (req, res) => {
     console.log('Invalid items');
     return
   }
-
   items.forEach(item => {
     delete item.unit_amount;
     delete item.name;
   });
+
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: req.body,
       mode: 'payment',
       success_url: `${YOUR_DOMAIN}/payment-success`,
       cancel_url: `${YOUR_DOMAIN}/cart`,
-      shipping_address_collection: {
-        allowed_countries: ['US', 'CA'],
-      }
     });
     res.json({securePaymentLink: session.url})
   } catch (err) {

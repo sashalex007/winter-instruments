@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+//ui
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -12,14 +14,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 
-export default function ProductTemplate({ productData, cartFunctions, cartdata }) {
-
-    const category = productData[0]
-    const products = productData[1]
+export default function ProductTemplate({ productName, productData, cartFunctions}) {
+    const category = productName
+    const products = productData
     const [product, setProduct] = useState(products[0])
 
     return (
@@ -95,7 +94,7 @@ export default function ProductTemplate({ productData, cartFunctions, cartdata }
 
         function createVariant(newProduct) {
             return (
-                <MenuItem onClick={() => {
+                <MenuItem key={newProduct.default_price} onClick={() => {
                     handleClose();
                     setProduct(newProduct)
                 }}>{newProduct.variant}</MenuItem>

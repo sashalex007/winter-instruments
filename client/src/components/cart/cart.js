@@ -1,90 +1,53 @@
-import * as React from 'react';
-import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import CartItem from './cartItem';
-import MenuItem from '@mui/material/MenuItem';
+import React from 'react';
+//ui
+import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import { Container } from '@mui/system';
+import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { ListItem } from '@mui/material';
+//logic
+import { Api } from '../../functions/api';
+//components
+import CartItem from './cartItem';
 
 
+export default function Cart({cartObject}) {
+    const { cartData, cartFunctions } = cartObject
 
-const StyledBadge = styled(Badge)(({ theme }) => ({
-    '& .MuiBadge-badge': {
-        right: -3,
-        top: 13,
-        border: `2px solid ${theme.palette.primary.main}`,
-        padding: '0 4px',
-    },
-}));
-
-export default function Cart(props) {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const openCart = (event) => {
-        if (cartSize > 0) setAnchorEl(event.currentTarget);
-    };
-    const closeCart = () => {
-        setAnchorEl(null);
-    };
-
-    const cartFunctions = props.cartFunctions;
-    const cartData = props.cartData;
-    const cartSize = cartFunctions.getCartSize();
+    function checkout() {
+        Api.createCheckoutSession(cartData);
+    }
 
     return (
-        <div>
-            <IconButton
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={openCart}
-                sx={{ color: 'white' }} aria-label="cart">
-                <StyledBadge badgeContent={cartSize} color="secondary">
-                    <ShoppingCartIcon />
-                </StyledBadge>
-            </IconButton>
+        <Container>
+            <Typography gutterBottom variant="h4" component="div">
+                Cart
+            </Typography>
+            <br></br>
+            <Card elevation={0}  sx={{maxWidth: 600, minWidth: 250, height: '100%' }}>
+                <List>
+                    {cartData.map(item =>
+                        <CartItem
+                            key={item.price}
+                            item={item}
+                            cartFunctions={cartFunctions}
+                        />)}
 
-            <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={closeCart}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
-                PaperProps={{
-                    style: {
-                        width: 450,
-                    },
-                }}
-            >
-                {cartData.map(block =>
-                    <CartItem
-                        key={block.price}
-                        item={block}
-                        cartSize={cartSize}
-                        cartFunctions={cartFunctions}
-                        closeCart={closeCart} />)}
+                    <ListItem style={{ cursor: 'default' }}>
+                        <ListItemText><b>Total</b></ListItemText>
+                        <span>&nbsp;&nbsp;</span>
+                        <Typography color="text.primary">
+                            ${cartFunctions.getCartTotal()}.00
+                        </Typography>
+                    </ListItem>
 
-                <MenuItem disableRipple style={{ cursor: 'default' }}>
-                    <ListItemText><b>Total</b></ListItemText>
-                    <span>&nbsp;&nbsp;</span>
-                    <Typography color="text.primary">
-                        ${cartFunctions.getCartTotal()}.00
-                    </Typography>
-                </MenuItem>
-
-                <MenuItem disableRipple style={{ cursor: 'default' }}>
-                    <Button component={Link} to={'/cart'} onClick={closeCart} variant="contained">View Cart</Button>
-                </MenuItem>
-            </Menu>
-        </div>
-
-    )
+                    <ListItem style={{ cursor: 'default' }}>
+                        <Button onClick={checkout} variant="contained">Checkout</Button>
+                    </ListItem>
+                </List>
+              </Card>          
+        </Container>
+    );
 }

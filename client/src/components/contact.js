@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+//ui
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/system';
 import Card from '@mui/material/Card';

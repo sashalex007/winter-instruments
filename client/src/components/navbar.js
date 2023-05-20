@@ -1,22 +1,23 @@
-import * as React from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+//ui
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-
-
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { Link } from 'react-router-dom';
-import Cart from './/cart/cart';
+//logic
+import getNavItems from '../staticData/navItems';
+//components
+import PopupCart from './cart/popupCart';
 
 const drawerWidth = 150;
 
@@ -34,11 +35,11 @@ function HideOnScroll(props) {
   );
 }
 
-export default function ButtonAppBar(props) {
-
+export default function NavBar(props) {
+  const cartObject = props.cartObject;
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const navItems = props.data
+  const navItems = getNavItems();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -83,7 +84,7 @@ export default function ButtonAppBar(props) {
             }}>
               Winter Instruments
             </Typography>
-            <Cart cartData={props.cartData} cartFunctions={props.cartFunctions}></Cart>
+            <PopupCart cartObject={cartObject}></PopupCart>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
