@@ -10,7 +10,7 @@ import { api } from './functions/api';
 import CartObject from './functions/cart';
 //components
 import ErrorAlert from './components/alerts/errorAlert';
-import NavBar from './components/navBar';
+import NavBar from './components/navbar';
 import Catalogue from './components/catalogue/catalogue';
 import Contact from './components/contact';
 import Cart from './components/cart/cart';
