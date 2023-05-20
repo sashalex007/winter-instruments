@@ -22,8 +22,8 @@ export default function App() {
   const cartObject = CartObject();
   const [productObject, setProductObject] = useState({ productCategoryList:[], productCategoryMap:{}});
   useEffect(() => {
-    api.getProducts(setProductObject)
-    //api.getTestProducts(setProductObject)
+    //api.getProducts(setProductObject)
+    api.getTestProducts(setProductObject)
   }, []);
 
   function createCategoryRoute(category) {

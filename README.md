@@ -1,7 +1,7 @@
-# My react portfolio webapp
+# Winter instruments online store
 
 ![Screenshot](screenshot.png)
 
-### Demo: https://alexpokho.xyz
+### Demo: https://winter-insruments.shop
 
-A simple, single page, portfolio website built with React and MUI. Features navigation and intelligent app-bar hiding. Project and Hobby cards are dynamically created from data. 
+TODO: description
