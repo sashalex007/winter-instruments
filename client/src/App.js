@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import { useMediaQuery } from '@mui/material';
 import { BrowserRouter as Router, Routes,Route,} from 'react-router-dom';
 //logic
-import { Api } from './functions/api';
+import { api } from './functions/api';
 import CartObject from './functions/cart';
 //components
 import NavBar from './components/navBar';
@@ -22,8 +22,8 @@ export default function App() {
   const cartObject = CartObject();
   const [productObject, setProductObject] = useState({ productCategoryList:[], productCategoryMap:{}});
   useEffect(() => {
-    Api.getProducts(setProductObject)
-    //Api.getTestProducts(setProductObject)
+    api.getProducts(setProductObject)
+    //api.getTestProducts(setProductObject)
   }, []);
 
   function createCategoryRoute(category) {

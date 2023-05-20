@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import { ListItem } from '@mui/material';
 //logic
-import { Api } from '../../functions/api';
+import { api } from '../../functions/api';
 //components
 import CartItem from './cartItem';
 
@@ -17,7 +17,7 @@ export default function Cart({cartObject}) {
     const { cartData, cartFunctions } = cartObject
 
     function checkout() {
-        Api.createCheckoutSession(cartData);
+        api.createCheckoutSession(cartData);
     }
 
     return (
