@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes,Route,} from 'react-router-dom';
 import { api } from './functions/api';
 import CartObject from './functions/cart';
 //components
+import ErrorAlert from './components/alerts/errorAlert';
 import NavBar from './components/navBar';
 import Catalogue from './components/catalogue/catalogue';
 import Contact from './components/contact';
@@ -18,12 +19,13 @@ import CategoryTemplate from './components/catalogue/categoryTemplate';
 
 
 export default function App() {
-
   const cartObject = CartObject();
+
+  const [error, setError] = useState({ open: false, message: '' });
   const [productObject, setProductObject] = useState({ productCategoryList:[], productCategoryMap:{}});
   useEffect(() => {
-    //api.getProducts(setProductObject)
-    api.getTestProducts(setProductObject)
+    api.getProducts(setProductObject, setError)
+    //api.getTestProducts(setProductObject, setError)
   }, []);
 
   function createCategoryRoute(category) {
@@ -48,11 +50,13 @@ export default function App() {
                 <Routes>
                   <Route exact path='/' element={< Catalogue productCategoryList={productObject.productCategoryList} />}></Route>
                   <Route exact path='/contact' element={< Contact />}></Route>
-                  <Route exact path='/cart' element={< Cart cartObject={cartObject} />}></Route>
+                  <Route exact path='/cart' element={< Cart cartObject={cartObject} setError={setError} />}></Route>
                   <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartObject.cartFunctions} />}></Route>
                   {productObject.productCategoryList.map(category => createCategoryRoute(category))}
                 </Routes>
               </Router>
+
+              <ErrorAlert open={error.open} errorMessage={error.message} setError={setError}></ErrorAlert>
 
             </Grid>
           </Grid>

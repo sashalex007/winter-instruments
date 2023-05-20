@@ -13,11 +13,11 @@ import { api } from '../../functions/api';
 import CartItem from './cartItem';
 
 
-export default function Cart({cartObject}) {
+export default function Cart({cartObject, setError}) {
     const { cartData, cartFunctions } = cartObject
 
     function checkout() {
-        api.createCheckoutSession(cartData);
+        api.createCheckoutSession(cartData, setError);
     }
 
     return (

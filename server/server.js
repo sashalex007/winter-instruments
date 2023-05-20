@@ -1,64 +1,32 @@
-const path = require('path');
-const express = require('express');
-const bodyParser = require('body-parser')
-const jsonParser = bodyParser.json()
+import { getProducts, createCheckoutSession } from './stripeApi.js';
+import path, { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import express from 'express';
+import bodyParser from 'body-parser';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3001;
+const jsonParser = bodyParser.json();
 const app = express();
-const stripe = require('stripe')('sk_test_51N8o0fC48L00qx1Q9wI1tdRtvFQA3iiERKleCAhYaDVhviObSZkfkjKnu5vRXQl4AbC69Xw1ihZo7he3qjLw381Z00qERUorgu');
-const YOUR_DOMAIN = 'http://localhost:3001';
 
-
-async function getProducts() {
-  const products = await stripe.products.list({});
-  const prices = await stripe.prices.list({});
-  return {
-    products: products.data,
-    prices: prices.data
-  };
-}
-
-//Launch server
+//launch server
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
-
 //serve static assets 
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(resolve(__dirname, '../client/build')));
 
+//get products
 app.get("/getproducts", (req, res) => {
-  getProducts().then((products) => {
-    res.json(products);
-  })
+  getProducts(res);
 });
-
-
-app.post('/create-checkout-session', jsonParser, async (req, res) => {
-  let items = req.body;
-  if (!Array.isArray(items)) {
-    console.log('Invalid items');
-    return
-  }
-  items.forEach(item => {
-    delete item.unit_amount;
-    delete item.name;
-  });
-
-  try {
-    const session = await stripe.checkout.sessions.create({
-      line_items: req.body,
-      mode: 'payment',
-      success_url: `${YOUR_DOMAIN}/payment-success`,
-      cancel_url: `${YOUR_DOMAIN}/cart`,
-    });
-    res.json({securePaymentLink: session.url})
-  } catch (err) {
-    console.log(err); // TypeError: failed to fetch
-  }
+//create checkout session
+app.post('/create-checkout-session', jsonParser, (req, res) => {
+  createCheckoutSession(res, req.body)
 });
-
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(resolve(__dirname, '../client/build', 'index.html'));
 });
