@@ -17,7 +17,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 //logic
 import getNavItems from '../staticData/navItems';
 //components
-import PopupCart from './cart/popupCart';
+import PopupCart from './cart/popupCart/popupCart';
 
 const drawerWidth = 150;
 

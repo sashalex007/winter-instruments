@@ -1,4 +1,5 @@
-import { getProducts, createCheckoutSession } from './stripeApi.js';
+import { stripeApi } from './stripeApi.js';
+import { easypostApi } from './easypostApi.js';
 import path, { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
@@ -18,12 +19,19 @@ app.listen(PORT, () => {
 app.use(express.static(resolve(__dirname, '../client/build')));
 
 //get products
-app.get("/getproducts", (req, res) => {
-  getProducts(res);
+app.get("/get-products", (req, res) => {
+  stripeApi.getProducts(res);
 });
+
+//get shipping rate
+app.post('/get-shipping-rate', jsonParser, (req, res) => {
+  //easypostApi.getShippingRates(res, req.body);
+  easypostApi.easypostTest(res, req.body);
+});
+
 //create checkout session
 app.post('/create-checkout-session', jsonParser, (req, res) => {
-  createCheckoutSession(res, req.body)
+  stripeApi.createCheckoutSession(res, req.body)
 });
 
 // All other GET requests not handled before will return our React app

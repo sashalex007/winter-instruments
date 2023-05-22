@@ -4,6 +4,8 @@ export default function CartFunctions() {
 
     //create cart data from local storage
     const [cartData, setCartData] = useState([]);
+    const [shippingData, setShippingData] = useState({shipping: {}, isShipping: false});
+    
     useEffect(() => {
         const localCartData = JSON.parse(localStorage.getItem('cartData'));
         if (localCartData) {
@@ -24,6 +26,7 @@ export default function CartFunctions() {
         },
     
         addCartItem: (product) => {
+            cartFunctions.clearShippingData();
             let newCartData = [...cartData];
             let found = false;
             newCartData.forEach(item => {
@@ -46,17 +49,19 @@ export default function CartFunctions() {
         },
     
         deleteCartItem: (priceID) => {
+            cartFunctions.clearShippingData();
             const newCartData = cartData.filter(item => item.price !== priceID);
             setCartData(newCartData);
             saveCartData(newCartData);
         },
     
         editQty: (priceID, qty) => {
-            const newCartData = cartData.map(item => {
+            cartFunctions.clearShippingData();
+            let newCartData = cartData.map(item => {
                 if (item.price === priceID) {
                     item.quantity = qty;
                 }
-                return item;
+                return item
             })
             setCartData(newCartData);
             saveCartData(newCartData);
@@ -67,7 +72,10 @@ export default function CartFunctions() {
             cartData.forEach(item => {
                 total += item.unit_amount * item.quantity;
             })
-            return total;
+            if (shippingData.isShipping) {
+                total += shippingData.shipping.unit_amount;
+            }
+            return total.toFixed(2);
         },
     
         getCartSize: () => {
@@ -76,8 +84,17 @@ export default function CartFunctions() {
                 total += item.quantity;
             })
             return total;
+        },
+
+        setShippingData: (data) => {
+            setShippingData(data)
+        },
+
+        clearShippingData: () => {
+            setShippingData({shipping: {}, isShipping: false})
         }
+
     } 
-    return { cartData, cartFunctions}
+    return { cartData, shippingData, cartFunctions }
 }
 

@@ -3,7 +3,7 @@ export const apiUtilities = {
     mergeProductsAndPrices: (prices, products) => {
         const priceObject = {}
         prices.forEach(price => {
-            priceObject[price.id] = price.unit_amount / 100;
+            priceObject[price.id] = (price.unit_amount / 100).toFixed(2);
         })
         let productCategoryMap = {}
         const productCategoryList = []

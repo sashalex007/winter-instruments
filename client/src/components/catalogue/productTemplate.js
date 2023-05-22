@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 //ui
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,17 +8,13 @@ import Grid from '@mui/material/Grid';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import AddedAlert from '../alerts/addedAlert';
 
 
 export default function ProductTemplate({ productName, productData, cartFunctions}) {
     const category = productName
     const products = productData
-    const [product, setProduct] = useState(products[0])
+    const [ product, setProduct ] = useState(products[0])
 
     return (
         <Grid item xs>
@@ -104,14 +99,9 @@ export default function ProductTemplate({ productName, productData, cartFunction
 
     function CreateAddButton(product) {
         const [open, setOpen] = useState(false);
-
         const handleClickOpen = () => {
             setOpen(true);
         };
-        const handleClose = () => {
-            setOpen(false);
-        };
-
         return (
             <div>
                 <Button onClick={() => {
@@ -122,27 +112,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
                     })
                     handleClickOpen();
                 }} variant="contained">Add</Button>
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        Added to Cart!
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            {product.name} has been added to your cart.
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose}>Continue shopping</Button>
-                        <Button component={Link} to={'/cart'} onClick={handleClose} autoFocus>
-                            Go to cart
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <AddedAlert open={open} setOpen={setOpen} product={product} />
             </div>
         );
     }

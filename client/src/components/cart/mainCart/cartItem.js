@@ -9,9 +9,7 @@ import Minus from '@mui/icons-material/RemoveCircle';
 import Plus from '@mui/icons-material/AddCircle';
 
 
-export default function CartItem(props) {
-    const item = props.item;
-    const cartFunctions = props.cartFunctions;
+export default function CartItem({item, cartFunctions}) {
 
     return (
         <ListItem divider={true} style={{ cursor: 'default' }}>
@@ -29,7 +27,7 @@ export default function CartItem(props) {
                     }} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-                    {item.name} - ${item.unit_amount}.00
+                    {item.name} - ${item.unit_amount}
                 </Stack>
             </ListItemText>
 
@@ -38,7 +36,7 @@ export default function CartItem(props) {
                 cartFunctions.deleteCartItem(item.price);
             }}></Delete>
             <Typography variant="body2" color="text.secondary">
-                ${item.unit_amount * item.quantity}.00
+                ${(item.unit_amount * item.quantity).toFixed(2)}
             </Typography>
         </ListItem>
     )

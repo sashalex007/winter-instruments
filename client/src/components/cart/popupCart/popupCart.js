@@ -12,6 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 //components
 import PopupCartItem from './popupCartItem';
+import ShippingItem from '../shippingItem';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -24,6 +25,9 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 export default function PopupCart({cartObject}) {
+    const { cartData, shippingData, cartFunctions } = cartObject
+    const cartSize = cartFunctions.getCartSize();
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const openCart = (event) => {
@@ -32,11 +36,7 @@ export default function PopupCart({cartObject}) {
     const closeCart = () => {
         setAnchorEl(null);
     };
-
-    const cartFunctions = cartObject.cartFunctions;
-    const cartData = cartObject.cartData;
-    const cartSize = cartFunctions.getCartSize();
-
+    
     return (
         <div>
             <IconButton
@@ -72,12 +72,18 @@ export default function PopupCart({cartObject}) {
                         cartSize={cartSize}
                         cartFunctions={cartFunctions}
                         closeCart={closeCart} />)}
+                
+                <ShippingItem
+                        key={shippingData.price}
+                        shippingData={shippingData}
+                        cartFunctions={cartFunctions}
+                    />
 
                 <MenuItem disableRipple style={{ cursor: 'default' }}>
                     <ListItemText><b>Total</b></ListItemText>
                     <span>&nbsp;&nbsp;</span>
                     <Typography color="text.primary">
-                        ${cartFunctions.getCartTotal()}.00
+                        ${cartFunctions.getCartTotal()}
                     </Typography>
                 </MenuItem>
 
