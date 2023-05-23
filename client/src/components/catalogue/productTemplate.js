@@ -12,7 +12,6 @@ import AddedAlert from '../alerts/addedAlert';
 
 
 export default function ProductTemplate({ productName, productData, cartFunctions}) {
-    const category = productName
     const products = productData
     const [ product, setProduct ] = useState(products[0])
 
@@ -24,21 +23,21 @@ export default function ProductTemplate({ productName, productData, cartFunction
                         component="img"
                         height="140"
                         image={product.images[0]}
-                        alt={category}
+                        alt={productName}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                            {category}
+                            {productName} - {(product.unit_amount/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {product.description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
+                
                 <CardActions>
                     {CreateVariantSelector(products)}
                     {CreateAddButton(product)}
-
                 </CardActions>
             </Card>
         </Grid>
@@ -60,6 +59,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
         function createVariantMenuandButton(products) {
             return (
                 <div>
+                    {product.variant_title}:
                     <Button
                         id="basic-button"
                         aria-controls={open ? 'basic-menu' : undefined}
@@ -112,7 +112,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
                         name: product.name
                     })
                     handleClickOpen();
-                }} variant="contained">Add</Button>
+                }} variant="contained">Add to cart</Button>
                 <AddedAlert open={open} setOpen={setOpen} product={product} />
             </div>
         );

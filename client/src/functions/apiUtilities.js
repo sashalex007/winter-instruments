@@ -31,11 +31,16 @@ export const apiUtilities = {
             const bucketedProductKeys = []
 
             productList.forEach(product => {
-                const metadata = product.metadata.name_variant.split('_')
-                const bucket = metadata[0]
-                if (metadata.length > 1) {
-                    product.variant = metadata[1]
+                let bucket = ''
+                if (product.metadata.name_variant === undefined) {
+                    bucket = product.name
+                } else {
+                    const metadata = product.metadata.name_variant.split('_')
+                    bucket = metadata[0]
+                    product.variant_title = metadata[1]
+                    product.variant = metadata[2]
                 }
+
                 if (bucketedProductMap[bucket] === undefined) {
                     bucketedProductKeys.push(bucket)
                     bucketedProductMap[bucket] = [product]

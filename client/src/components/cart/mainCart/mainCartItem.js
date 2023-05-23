@@ -31,7 +31,6 @@ export default function MainCartItem({item, cartFunctions}) {
                 </Stack>
             </ListItemText>
 
-
             <Delete style={{ cursor: 'pointer' }} onClick={() => {
                 cartFunctions.deleteCartItem(item.price);
             }}></Delete>
