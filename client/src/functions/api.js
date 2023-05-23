@@ -65,28 +65,6 @@ export const api = {
         }
     },
 
-    createCheckoutSession: async (cartData, setError) => {
-        try {
-            const checkoutData = []
-            cartData.forEach(item => {
-                checkoutData.push({ price: item.price, quantity: item.quantity });
-            });
-            const data = await fetch('/create-checkout-session', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(checkoutData)
-            });
-            const dataJson = await data.json();
-            if (dataJson.error) throw new Error(dataJson.error);
-            window.location.href = dataJson.securePaymentLink;
-        }
-        catch (err) {
-            console.log(err.message)
-            setError({ open: true, message: err.message });
-        }
-    }
 }
 
 

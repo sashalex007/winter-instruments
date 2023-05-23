@@ -4,7 +4,7 @@ export default function CartFunctions() {
 
     //create cart data from local storage
     const [cartData, setCartData] = useState([]);
-    const [shippingData, setShippingData] = useState({shipping: {}, isShipping: false});
+    const [shippingData, setShippingData] = useState({shipping: {}, isShipping: false, checkoutSessionURL: '' });
     
     useEffect(() => {
         const localCartData = JSON.parse(localStorage.getItem('cartData'));
@@ -37,6 +37,7 @@ export default function CartFunctions() {
             })
             if (!found) {
                 newCartData.push({
+                    id : product.id,
                     name: product.name,
                     price: product.price,
                     unit_amount: product.unit_amount,

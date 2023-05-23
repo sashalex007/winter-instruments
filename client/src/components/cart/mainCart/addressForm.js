@@ -30,6 +30,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
   }
 
   let address = testAddress.address
+  address.name = testAddress.name
   const options = {
     appearance: {/*...*/ },
   };
@@ -57,6 +58,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
               if (event.complete) {
                 // Extract potentially complete address
                 address = event.value.address;
+                address.name = event.value.name;
               }
             }} />
           </form>

@@ -21,7 +21,7 @@ export default function Cart({ cartObject }) {
     const { cartData, shippingData, cartFunctions } = cartObject
     const setError = useContext(ErrorContext);
     function checkout() {
-        api.createCheckoutSession(cartData, setError);
+        window.location.href = shippingData.checkoutSessionURL
     }
     
     return (

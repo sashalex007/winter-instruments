@@ -1,5 +1,5 @@
-import { stripeApi } from './stripeApi.js';
-import { easypostApi } from './easypostApi.js';
+import { stripeApi } from './api/stripeApi.js';
+import { api } from './api/api.js';
 import path, { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
@@ -25,13 +25,7 @@ app.get("/get-products", (req, res) => {
 
 //get shipping rate
 app.post('/get-shipping-rate', jsonParser, (req, res) => {
-  //easypostApi.getShippingRates(res, req.body);
-  easypostApi.easypostTest(res, req.body);
-});
-
-//create checkout session
-app.post('/create-checkout-session', jsonParser, (req, res) => {
-  stripeApi.createCheckoutSession(res, req.body)
+  api.getShippingAndCheckoutURL(res, req.body);
 });
 
 // All other GET requests not handled before will return our React app

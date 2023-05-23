@@ -12,8 +12,10 @@ export default function ShippingItem({ shippingData, cartFunctions }) {
         return (
             <ListItem divider={true} style={{ cursor: 'default' }}>
                 <ListItemText>
-                    <Stack direction="row" spacing={0}>
-                        {shipping.name}
+                    <Stack direction="row" spacing={0}>                        
+                        <Typography variant="body2" color="text.secondary">
+                        {shipping.name} - {shipping.info} {shipping.weight_oz}oz [{shipping.estimated_days} days]
+                        </Typography>
                     </Stack>
                 </ListItemText>
 

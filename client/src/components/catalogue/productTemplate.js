@@ -106,6 +106,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
             <div>
                 <Button onClick={() => {
                     cartFunctions.addCartItem({
+                        id: product.id,
                         price: product.default_price,
                         unit_amount: product.unit_amount,
                         name: product.name
