@@ -83,7 +83,7 @@ export default function PopupCart({cartObject}) {
                     <ListItemText><b>Total</b></ListItemText>
                     <span>&nbsp;&nbsp;</span>
                     <Typography color="text.primary">
-                        ${cartFunctions.getCartTotal()}
+                    {(cartFunctions.getCartTotal()/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
                     </Typography>
                 </MenuItem>
 

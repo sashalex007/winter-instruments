@@ -25,7 +25,7 @@ export const api = {
             res.json(checkoutData);
         }
         catch (err) {
-            console.log(err.message);
+            console.log(err);
             res.json({ error: err.message });
         }
     }

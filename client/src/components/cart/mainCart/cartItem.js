@@ -27,7 +27,7 @@ export default function CartItem({item, cartFunctions}) {
                     }} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-                    {item.name} - ${item.unit_amount}
+                    {item.name} - {(item.unit_amount/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
                 </Stack>
             </ListItemText>
 
@@ -36,7 +36,7 @@ export default function CartItem({item, cartFunctions}) {
                 cartFunctions.deleteCartItem(item.price);
             }}></Delete>
             <Typography variant="body2" color="text.secondary">
-                ${(item.unit_amount * item.quantity).toFixed(2)}
+                {((item.unit_amount * item.quantity)/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
             </Typography>
         </ListItem>
     )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { AddressElement } from '@stripe/react-stripe-js';
@@ -8,15 +8,16 @@ import { api } from '../../../functions/api';
 import { ErrorContext } from '../../../App';
 //ui
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Collapse from '@mui/material/Collapse';
+import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
+
 const stripe = loadStripe('pk_test_51N8o0fC48L00qx1Q0j0al75mo9VWVfYJxC2R7XFveKILBnykArws6yVIlAmxrX20EfsfvymzBZWtAKpByMKuqTYt00WVpLBnCY');
 
 export default function AddressForm({ shippingData, cartData, cartFunctions }) {
-  const isShipping = shippingData.isShipping
-  const cartSize = cartFunctions.getCartSize()
-
   const testAddress = {
     name: 'Jane Doe',
     address: {
@@ -26,46 +27,85 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
       state: 'CA',
       postal_code: '94080',
       country: 'US',
+      name: 'Jane Doe',
     }
   }
 
-  let address = testAddress.address
-  address.name = testAddress.name
+  const [address, setAddress] = useState(testAddress)
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const isShipping = shippingData.isShipping
+  const cartSize = cartFunctions.getCartSize()
+
   const options = {
     appearance: {/*...*/ },
   };
 
   const setError = useContext(ErrorContext);
   function getShippingRate() {
-    api.getShippingRate(cartFunctions.setShippingData, address, cartData, setError)
+    setLoading(true);
+    api.getShippingRate(cartFunctions.setShippingData, address, cartData, setError, setLoading, setSuccess)
+  }
+  function closeSnackbar() {
+    setSuccess(false);
   }
 
-  if (!isShipping && cartSize > 0) {
+  if (cartSize > 0) {
     return (
-      <div show>
-        <Elements stripe={stripe} options={options}>
-          <form>
-            <h3>Shipping</h3>
-            <AddressElement options={{
-              defaultValues: testAddress,
-              mode: 'shipping',
-              allowedCountries: ['US', 'CA', 'GB', 'FR', 'DE', 'AU', 'JP', 'NZ', 'SG'],
-              blockPoBox: true,
-              fields: {
-                phone: 'never',
-              }
-            }} onChange={(event) => {
-              if (event.complete) {
-                // Extract potentially complete address
-                address = event.value.address;
-                address.name = event.value.name;
-              }
-            }} />
-          </form>
-        </Elements>
-        <br></br>
-        <Button onClick={getShippingRate} variant="contained">Get shipping rate</Button>
+      <div>
+        <Collapse in={!isShipping}>
+          <Elements stripe={stripe} options={options}>
+            <form>
+              <h3>Shipping</h3>
+              <AddressElement options={{
+                defaultValues: testAddress,
+                mode: 'shipping',
+                allowedCountries: ['US', 'CA', 'GB', 'FR', 'DE', 'AU', 'JP', 'NZ', 'SG'],
+                blockPoBox: true,
+                fields: {
+                  phone: 'never',
+                }
+              }} onChange={(event) => {
+                if (event.complete) {
+                  // Extract potentially complete address
+                  const newAddress = event.value.address;
+                  newAddress.name = event.value.name;
+                  setAddress(newAddress);
+                }
+              }} />
+            </form>
+          </Elements>
+          <br></br>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ m: 1, position: 'relative' }}>
+              <Button
+                variant="contained"
+                disabled={loading}
+                onClick={getShippingRate}
+              >
+                Get shipping rate
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                  }}
+                />
+              )}
+            </Box>
+          </Box>
+        </Collapse>
 
+        <Snackbar open={success} autoHideDuration={6000} onClose={closeSnackbar}>
+          <Alert onClose={closeSnackbar} severity="success" sx={{ width: '100%' }}>
+            Shipping added
+          </Alert>
+        </Snackbar>
       </div>
     );
   }

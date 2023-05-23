@@ -18,6 +18,7 @@ export const easypostApi = {
             return verifiedAddress;
         }
         catch (err) {
+            err.message = err.message + ' -verfifyAddress'
             throw err;
         }
     },
@@ -67,7 +68,7 @@ export const easypostApi = {
             let shippingRate = shipment.lowestRate();
             if (shippingRate.est_delivery_days === null) shippingRate.est_delivery_days = 7;
             const shippingRateObject = {
-                rate: parseFloat(shippingRate.rate),
+                rate: Math.round(parseFloat(shippingRate.rate)*100),
                 info: shippingRate.service,
                 estimated_days: shippingRate.est_delivery_days,
                 weight_oz: totalWeight
@@ -75,6 +76,7 @@ export const easypostApi = {
             return shippingRateObject;
         }
         catch (err) {
+            err.message = err.message + ' -getShippingRates'
             throw err;
         }
     },

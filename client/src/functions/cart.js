@@ -76,7 +76,7 @@ export default function CartFunctions() {
             if (shippingData.isShipping) {
                 total += shippingData.shipping.unit_amount;
             }
-            return total.toFixed(2);
+            return total
         },
     
         getCartSize: () => {

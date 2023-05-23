@@ -23,7 +23,7 @@ export default function ShippingItem({ shippingData, cartFunctions }) {
                     cartFunctions.clearShippingData(shipping.price);
                 }}></Delete>
                 <Typography variant="body2" color="text.secondary">
-                    ${shipping.unit_amount * shipping.quantity}
+                    {(shipping.unit_amount/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
                 </Typography>
             </ListItem>
         )

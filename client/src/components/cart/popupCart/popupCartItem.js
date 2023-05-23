@@ -17,7 +17,7 @@ export default function PopupCartItem({item, cartSize, cartFunctions, closeCart}
         }}/>
 
         <Typography variant="body2" color="text.secondary">
-            ${(item.unit_amount*item.quantity).toFixed(2)}
+            {((item.unit_amount*item.quantity)/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
           </Typography>
           </MenuItem>
     )

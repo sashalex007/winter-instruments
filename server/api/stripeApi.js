@@ -1,3 +1,4 @@
+import e from 'express';
 import Stripe from 'stripe';
 const stripe = Stripe('sk_test_51N8o0fC48L00qx1Q9wI1tdRtvFQA3iiERKleCAhYaDVhviObSZkfkjKnu5vRXQl4AbC69Xw1ihZo7he3qjLw381Z00qERUorgu');
 const YOUR_DOMAIN = 'http://localhost:3001';
@@ -9,11 +10,12 @@ export const stripeApi = {
             const products = await stripe.products.list({});
             const prices = await stripe.prices.list({});
             if (products.length === 0 || prices.length === 0) //stripe sends empty product or prices if request fails
-                throw new Error('Failed to get products - stripe api error');
+                throw new Error('No products found');
             res.json({ products: products.data, prices: prices.data });
         }
         catch (err) {
-            console.log(err.message);
+            err.message = err.message + ' -getProducts'
+            console.log(err);
             res.json({ error: err.message });
         }
     },
@@ -25,18 +27,19 @@ export const stripeApi = {
                 ids: productIdList
             });
             if (products.data.length === 0) //stripe sends empty product or prices if request fails
-                throw new Error('Failed to get products - stripe api error');
+                throw new Error('Cart validation failed (no products found)');
             const verifiedProducts = products.data
-            if (verifiedProducts.length !== items.length) throw new Error('Product verification failed')
+            if (verifiedProducts.length !== items.length) throw new Error('Cart validation failed')
             return verifiedProducts
         }
         catch (err) {
+            err.message = err.message + ' -verifyProducts'
             throw err;
         }
     },
 
     createCheckoutSession: async (items, verifiedAddress, shippingRate) => {
-        const shippingDescription = (
+        const shippingDescription = ( //stripe requires shipping description to be less than 100 characters
             verifiedAddress.street1 + ' ' +
             verifiedAddress.street2 + ' ' +
             verifiedAddress.city + ' ' +
@@ -46,13 +49,14 @@ export const stripeApi = {
             verifiedAddress.name
         ).substring(0, 100);
 
-        const cleanedItems = []
+        const cleanedItems = [] //stripe requires only price and quantity for each item
         items.forEach(item => {
             cleanedItems.push({
                 price: item.price,
                 quantity: item.quantity
             })
         });
+
         try {
             const session = await stripe.checkout.sessions.create({
                 line_items: cleanedItems,
@@ -73,7 +77,7 @@ export const stripeApi = {
                         display_name: shippingDescription,
                         type: 'fixed_amount',
                         fixed_amount: {
-                            amount: shippingRate * 100,
+                            amount: shippingRate,
                             currency: 'USD',
                         }
                     }
@@ -82,6 +86,7 @@ export const stripeApi = {
             return session.url;
         }
         catch (err) {
+            err.message = err.message + ' -createCheckoutSession'
             throw err
         }
     }
