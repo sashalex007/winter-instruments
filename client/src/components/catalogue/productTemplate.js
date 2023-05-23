@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 //ui
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -18,7 +19,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
     return (
         <Grid item xs>
             <Card elevation={5} sx={{ maxWidth: 600, minWidth: 250, height: '100%' }}>
-                <CardActionArea>
+                <CardActionArea component={Link} to={ '/'+ product.id} >
                     <CardMedia
                         component="img"
                         height="140"

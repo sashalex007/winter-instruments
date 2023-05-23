@@ -5,7 +5,7 @@ export const apiUtilities = {
         prices.forEach(price => {
             priceObject[price.id] = price.unit_amount;
         })
-        let productCategoryMap = {}
+        const productCategoryMap = {}
         const productCategoryList = []
         products.forEach(product => {
             product.unit_amount = priceObject[product.default_price];
@@ -19,11 +19,13 @@ export const apiUtilities = {
             }
         })
 
-        productCategoryMap = apiUtilities.bucketProductsByVariant(productCategoryList, productCategoryMap);
-        return { productCategoryList, productCategoryMap };
+        const {bucketedProductCategoryMap, flatProductList} = apiUtilities.bucketProductsByVariant(productCategoryList, productCategoryMap);
+        return { productCategoryList, productCategoryMap: bucketedProductCategoryMap, flatProductList };
     },
     
     bucketProductsByVariant: (productCategoryList, productCategoryMap) => {
+        const flatProductList = []
+        const flatProductMap = {}  
         const bucketedProductCategoryMap = {}
         productCategoryList.forEach(category => {
             const productList = productCategoryMap[category.name]
@@ -44,12 +46,16 @@ export const apiUtilities = {
                 if (bucketedProductMap[bucket] === undefined) {
                     bucketedProductKeys.push(bucket)
                     bucketedProductMap[bucket] = [product]
+
+                    flatProductMap[bucket] = flatProductList.length
+                    flatProductList.push([product])
                 } else {
                     bucketedProductMap[bucket].push(product)
+                    flatProductList[flatProductMap[bucket]].push(product)
                 }
             })
             bucketedProductCategoryMap[category.name] = { bucketedProductKeys, bucketedProductMap }
         })
-        return bucketedProductCategoryMap;
+        return {bucketedProductCategoryMap, flatProductList};
     }
 }

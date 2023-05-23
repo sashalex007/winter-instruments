@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 //ui
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
@@ -10,7 +11,7 @@ import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 export default function PopupCartItem({ item, cartSize, cartFunctions, closeCart }) {
 
     return (
-        <MenuItem divider={true} disableRipple style={{ cursor: 'default' }}>
+        <MenuItem onClick={closeCart} component={Link} to={'/' + item.id} divider={true} disableRipple style={{ cursor: 'default' }}>
 
             <Avatar variant='rounded' alt="img" src={item.img}>
                 <BrokenImageIcon />

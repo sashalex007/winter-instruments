@@ -18,13 +18,14 @@ import Contact from './components/contact';
 import MainCart from './components/cart/mainCart/mainCart';
 import PaymentSuccess from './components/cart/paymentSuccess';
 import CategoryTemplate from './components/catalogue/categoryTemplate';
+import { create } from '@mui/material/styles/createTransitions';
 
 export const ErrorContext = React.createContext();
 
 export default function App() {
   const cartObject = CartObject();
   const [error, setError] = useState({ open: false, message: '' });
-  const [productObject, setProductObject] = useState({ productCategoryList: [], productCategoryMap: {} });
+  const [productObject, setProductObject] = useState({ productCategoryList: [], productCategoryMap: {}, flatProductList: [] });
 
   useEffect(() => {
     api.getProducts(setProductObject, setError)
@@ -36,6 +37,30 @@ export default function App() {
       <Route exact path={category.link} key={category.link} element={
         < CategoryTemplate category={category} cartFunctions={cartFunctions} productList={productList} />
       }></Route>
+    );
+  }
+
+  function createProductRoute(product, cartFunctions) {
+    let productName = product[0].name;
+    if ((product[0].metadata.name_variant !== undefined)) {
+      productName = product[0].metadata.name_variant.split('_')[0];
+    } 
+    const productList = {
+      bucketedProductMap: {},
+      bucketedProductKeys: [productName]
+    }
+    productList.bucketedProductMap[productName] = product;
+    
+    function createEach(product, cartFunctions) {
+      return (
+        <Route exact path={product.id} key={product.id} element={
+          < CategoryTemplate category={{name:''}} cartFunctions={cartFunctions} productList={productList} />
+        }></Route>
+      );
+    }
+
+    return (
+      product.map(product => createEach(product, cartFunctions))
     );
   }
 
@@ -61,6 +86,7 @@ export default function App() {
                     <Route exact path='/cart' element={< MainCart cartObject={cartObject} />}></Route>
                     <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartObject.cartFunctions} />}></Route>
                     {productObject.productCategoryList.map(category => createCategoryRoute(category, cartObject.cartFunctions))}
+                    {productObject.flatProductList.map(product => createProductRoute(product, cartObject.cartFunctions))}
                   </Routes>
                 </Router>
               </ErrorContext.Provider>

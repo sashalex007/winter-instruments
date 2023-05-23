@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 //ui
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -10,6 +11,7 @@ import Plus from '@mui/icons-material/AddCircle';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
+import Box from '@mui/material/Box';
 
 export default function MainCartItem({ item, cartFunctions }) {
 
@@ -30,15 +32,21 @@ export default function MainCartItem({ item, cartFunctions }) {
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </Stack>
 
+
             <ListItemAvatar>
-                <Avatar variant='rounded' alt="img" src={item.img}>
-                    <BrokenImageIcon/>
+                <Avatar component={Link} to={'/' + item.id} variant='rounded' alt="img" src={item.img}>
+                    <BrokenImageIcon />
                 </Avatar>
             </ListItemAvatar>
 
+
             <ListItemText>
-                {item.name} - {(item.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                <Link to={'/' + item.id} style={{ color: 'inherit', textDecoration: 'inherit'}} >
+                    {item.name} - {(item.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                </Link>
             </ListItemText>
+
+
 
             <Delete style={{ cursor: 'pointer' }} onClick={() => {
                 cartFunctions.deleteCartItem(item.price);
