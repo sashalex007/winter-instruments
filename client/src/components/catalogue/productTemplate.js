@@ -109,7 +109,8 @@ export default function ProductTemplate({ productName, productData, cartFunction
                         id: product.id,
                         price: product.default_price,
                         unit_amount: product.unit_amount,
-                        name: product.name
+                        name: product.name,
+                        img: product.images[0]
                     })
                     handleClickOpen();
                 }} variant="contained">Add to cart</Button>

@@ -1,12 +1,16 @@
 import React from 'react';
 //ui
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Avatar from '@mui/material/Avatar';
+import BrokenImageIcon from '@mui/icons-material/BrokenImage';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+
 
 
 export default function AddedAlert({ open, setOpen, product }) {
@@ -23,16 +27,25 @@ export default function AddedAlert({ open, setOpen, product }) {
             <DialogTitle id="alert-dialog-title">
                 Added to Cart!
             </DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+
+            <ListItem style={{ cursor: 'default' }}>
+                <ListItemAvatar >
+                    <Avatar variant='rounded' alt="img" src={product.images[0]}>
+                        <BrokenImageIcon />
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText>
                     {product.name} has been added to your cart.
-                </DialogContentText>
-            </DialogContent>
+                </ListItemText>
+            </ListItem>
+
             <DialogActions>
-                <Button onClick={handleClose}>Continue shopping</Button>
-                <Button component={Link} to={'/cart'} onClick={handleClose} autoFocus>
-                    Go to cart
-                </Button>
+                <Stack direction="row" spacing={1}>
+                    <Button onClick={handleClose}>Continue shopping</Button>
+                    <Button variant='contained' component={Link} to={'/cart'} onClick={handleClose} autoFocus>
+                        Go to cart
+                    </Button>
+                </Stack>
             </DialogActions>
         </Dialog>
     );

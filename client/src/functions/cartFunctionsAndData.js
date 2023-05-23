@@ -41,7 +41,8 @@ export default function CartFunctions() {
                     name: product.name,
                     price: product.price,
                     unit_amount: product.unit_amount,
-                    quantity: 1
+                    quantity: 1,
+                    img: product.img
                 })
             }
     
