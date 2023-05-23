@@ -18,7 +18,7 @@ import { Alert } from '@mui/material';
 const stripe = loadStripe('pk_test_51N8o0fC48L00qx1Q0j0al75mo9VWVfYJxC2R7XFveKILBnykArws6yVIlAmxrX20EfsfvymzBZWtAKpByMKuqTYt00WVpLBnCY');
 
 export default function AddressForm({ shippingData, cartData, cartFunctions }) {
-  
+
   const testAddress = {
     name: 'Jane Doe',
     address: {
@@ -33,6 +33,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
   }
 
   const [address, setAddress] = useState(testAddress)
+  const [addressComplete, setAddressComplete] = useState(false)
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const isShipping = shippingData.isShipping
@@ -67,11 +68,12 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
                   phone: 'never',
                 }
               }} onChange={(event) => {
+                setAddressComplete(false);
+                const newAddress = event.value.address;
+                newAddress.name = event.value.name;
+                setAddress(newAddress);
                 if (event.complete) {
-                  // Extract potentially complete address
-                  const newAddress = event.value.address;
-                  newAddress.name = event.value.name;
-                  setAddress(newAddress);
+                  setAddressComplete(true);
                 }
               }} />
             </form>
@@ -81,7 +83,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
             <Box sx={{ m: 1, position: 'relative' }}>
               <Button
                 variant="contained"
-                disabled={loading}
+                disabled={loading || !addressComplete}
                 onClick={getShippingRate}
               >
                 Get shipping rate

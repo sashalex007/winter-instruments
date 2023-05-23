@@ -8,7 +8,9 @@ import { useMediaQuery } from '@mui/material';
 //logic
 import { api } from './functions/api';
 import CartObject from './functions/cartFunctionsAndData';
+import ScrollToTop from './functions/scrollToTop';
 //components
+import ProductsLoading from './components/alerts/productsLoading';
 import ErrorAlert from './components/alerts/errorAlert';
 import NavBar from './components/navbar';
 import Catalogue from './components/catalogue/catalogue';
@@ -42,14 +44,16 @@ export default function App() {
   const styleSm = { p: 2, mt: 7, mb: 7 };
   return (
     <div className="App">
-        <Container maxWidth="xl">
-          <Box sx={isXs ? styleXs : styleSm}>
-            <br></br>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+      <Container maxWidth="xl">
+        <Box sx={isXs ? styleXs : styleSm}>
+          <br></br>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <ProductsLoading open={productObject.productCategoryList.length === 0} />
 
               <ErrorContext.Provider value={setError}>
                 <Router>
+                  <ScrollToTop />
                   <NavBar cartObject={cartObject}></NavBar>
                   <Routes>
                     <Route exact path='/' element={< Catalogue productCategoryList={productObject.productCategoryList} />}></Route>
@@ -59,14 +63,14 @@ export default function App() {
                     {productObject.productCategoryList.map(category => createCategoryRoute(category, cartObject.cartFunctions))}
                   </Routes>
                 </Router>
-                </ErrorContext.Provider>
+              </ErrorContext.Provider>
 
-                <ErrorAlert error={error} setError={setError}></ErrorAlert>
+              <ErrorAlert error={error} setError={setError}></ErrorAlert>
 
-              </Grid>
             </Grid>
-          </Box>
-        </Container>
+          </Grid>
+        </Box>
+      </Container>
     </div>
   );
 }
