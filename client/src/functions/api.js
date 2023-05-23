@@ -25,7 +25,7 @@ export const api = {
         }
     },
 
-    getTestShippingRate: async (setShippingData, address) => {
+    getTestShippingRate: async (setShippingData, address, setLoading, setSuccess) => {
         const shippingData = {
             shipping: {
                 name: 'Shipping',
@@ -38,10 +38,12 @@ export const api = {
             isShipping: true
         }
         setShippingData(shippingData);
+        setLoading(false);
+        setSuccess(true);
     },
 
     getShippingRate: async (setShippingData, address, cartData, setError, setLoading, setSuccess) => {
-        if (test) return api.getTestShippingRate(setShippingData, address);
+        if (test) return api.getTestShippingRate(setShippingData, address, setLoading, setSuccess);
 
         const shippingRateObject = {
             address: address,

@@ -18,6 +18,7 @@ import { Alert } from '@mui/material';
 const stripe = loadStripe('pk_test_51N8o0fC48L00qx1Q0j0al75mo9VWVfYJxC2R7XFveKILBnykArws6yVIlAmxrX20EfsfvymzBZWtAKpByMKuqTYt00WVpLBnCY');
 
 export default function AddressForm({ shippingData, cartData, cartFunctions }) {
+  
   const testAddress = {
     name: 'Jane Doe',
     address: {
