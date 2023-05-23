@@ -1,5 +1,4 @@
 import React from 'react';
-import { useContext } from 'react';
 //ui
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -8,18 +7,14 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import { ListItem } from '@mui/material';
-//logic
-import { api } from '../../../functions/api';
-import { ErrorContext } from '../../../App';
 //components
-import CartItem from './cartItem';
+import MainCartItem from './mainCartItem';
 import ShippingItem from '../shippingItem';
 import AddressForm from './addressForm';
 
 
-export default function Cart({ cartObject }) {
+export default function MainCart({ cartObject }) {
     const { cartData, shippingData, cartFunctions } = cartObject
-    const setError = useContext(ErrorContext);
     function checkout() {
         window.location.href = shippingData.checkoutSessionURL
     }
@@ -33,7 +28,7 @@ export default function Cart({ cartObject }) {
             <Card elevation={0} sx={{ maxWidth: 600, minWidth: 250, height: '100%' }}>
                 <List>
                     {cartData.map(item =>
-                        <CartItem
+                        <MainCartItem
                             key={item.price}
                             item={item}
                             cartFunctions={cartFunctions}

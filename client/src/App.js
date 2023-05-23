@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
 //ui
 import { Box } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { useMediaQuery } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
 //logic
 import { api } from './functions/api';
-import CartObject from './functions/cart';
+import CartObject from './functions/cartFunctionsAndData';
 //components
 import ErrorAlert from './components/alerts/errorAlert';
 import NavBar from './components/navbar';
 import Catalogue from './components/catalogue/catalogue';
 import Contact from './components/contact';
-import Cart from './components/cart/mainCart/cart';
+import MainCart from './components/cart/mainCart/mainCart';
 import PaymentSuccess from './components/cart/paymentSuccess';
 import CategoryTemplate from './components/catalogue/categoryTemplate';
 
@@ -22,9 +22,8 @@ export const ErrorContext = React.createContext();
 export default function App() {
   const cartObject = CartObject();
   const [error, setError] = useState({ open: false, message: '' });
-
-
   const [productObject, setProductObject] = useState({ productCategoryList: [], productCategoryMap: {} });
+
   useEffect(() => {
     api.getProducts(setProductObject, setError)
   }, []);
@@ -55,7 +54,7 @@ export default function App() {
                   <Routes>
                     <Route exact path='/' element={< Catalogue productCategoryList={productObject.productCategoryList} />}></Route>
                     <Route exact path='/contact' element={< Contact />}></Route>
-                    <Route exact path='/cart' element={< Cart cartObject={cartObject} />}></Route>
+                    <Route exact path='/cart' element={< MainCart cartObject={cartObject} />}></Route>
                     <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartObject.cartFunctions} />}></Route>
                     {productObject.productCategoryList.map(category => createCategoryRoute(category, cartObject.cartFunctions))}
                   </Routes>

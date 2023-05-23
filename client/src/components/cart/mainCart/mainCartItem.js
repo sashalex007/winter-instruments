@@ -9,7 +9,7 @@ import Minus from '@mui/icons-material/RemoveCircle';
 import Plus from '@mui/icons-material/AddCircle';
 
 
-export default function CartItem({item, cartFunctions}) {
+export default function MainCartItem({item, cartFunctions}) {
 
     return (
         <ListItem divider={true} style={{ cursor: 'default' }}>
