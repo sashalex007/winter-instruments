@@ -11,7 +11,6 @@ import Plus from '@mui/icons-material/AddCircle';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
-import Box from '@mui/material/Box';
 
 export default function MainCartItem({ item, cartFunctions }) {
 

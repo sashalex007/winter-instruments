@@ -18,7 +18,6 @@ import Contact from './components/contact';
 import MainCart from './components/cart/mainCart/mainCart';
 import PaymentSuccess from './components/cart/paymentSuccess';
 import CategoryTemplate from './components/catalogue/categoryTemplate';
-import { create } from '@mui/material/styles/createTransitions';
 
 export const ErrorContext = React.createContext();
 

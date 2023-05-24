@@ -6,10 +6,10 @@ import { styled } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
+import ListItem from '@mui/material/ListItem';
 //components
 import PopupCartItem from './popupCartItem';
 import ShippingItem from '../shippingItem';
@@ -24,10 +24,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-export default function PopupCart({cartObject}) {
+export default function PopupCart({ cartObject }) {
     const { cartData, shippingData, cartFunctions } = cartObject
     const cartSize = cartFunctions.getCartSize();
-    
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const openCart = (event) => {
@@ -36,7 +36,7 @@ export default function PopupCart({cartObject}) {
     const closeCart = () => {
         setAnchorEl(null);
     };
-    
+
     return (
         <div>
             <IconButton
@@ -72,24 +72,24 @@ export default function PopupCart({cartObject}) {
                         cartSize={cartSize}
                         cartFunctions={cartFunctions}
                         closeCart={closeCart} />)}
-                
-                <ShippingItem
-                        key={shippingData.price}
-                        shippingData={shippingData}
-                        cartFunctions={cartFunctions}
-                    />
 
-                <MenuItem disableRipple style={{ cursor: 'default' }}>
+                <ShippingItem
+                    key={shippingData.price}
+                    shippingData={shippingData}
+                    cartFunctions={cartFunctions}
+                />
+
+                <ListItem>
                     <ListItemText><b>Total</b></ListItemText>
                     <span>&nbsp;&nbsp;</span>
                     <Typography color="text.primary">
-                    {(cartFunctions.getCartTotal()/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+                        {(cartFunctions.getCartTotal() / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
                     </Typography>
-                </MenuItem>
+                </ListItem>
 
-                <MenuItem disableRipple style={{ cursor: 'default' }}>
+                <ListItem >
                     <Button component={Link} to={'/cart'} onClick={closeCart} variant="contained">View Cart</Button>
-                </MenuItem>
+                </ListItem>
             </Menu>
         </div>
 

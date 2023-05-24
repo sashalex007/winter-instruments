@@ -40,7 +40,7 @@ export default function MainCart({ cartObject }) {
                         cartFunctions={cartFunctions}
                     />
 
-                    <ListItem style={{ cursor: 'default' }}>
+                    <ListItem>
                         <ListItemText><b>Total</b></ListItemText>
                         <span>&nbsp;&nbsp;</span>
                         <Typography color="text.primary">
