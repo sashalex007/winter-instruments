@@ -7,8 +7,8 @@ export const stripeApi = {
 
     getProducts: async (res) => {
         try {
-            const products = await stripe.products.list({});
-            const prices = await stripe.prices.list({});
+            const products = await stripe.products.list({active: true});
+            const prices = await stripe.prices.list({active: true});
             if (products.length === 0 || prices.length === 0) //stripe sends empty product or prices if request fails
                 throw new Error('No products found');
             res.json({ products: products.data, prices: prices.data });

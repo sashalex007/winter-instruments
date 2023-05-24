@@ -77,12 +77,14 @@ export default function NavBar(props) {
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" component={Link} to={"/"} sx={{
+            <Typography variant="h6" sx={{
               flexGrow: 1,
               color: 'inherit',
               textDecoration: 'none'
             }}>
-              Winter Instruments
+              <Link to={"/"} style={{ color: 'inherit', textDecoration: 'inherit' }} >
+                Winter Instruments
+              </Link>
             </Typography>
             <PopupCart cartObject={cartObject}></PopupCart>
           </Toolbar>
