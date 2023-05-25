@@ -20,13 +20,11 @@ app.use(express.static(resolve(__dirname, '../client/build')));
 
 //get products
 app.get("/get-products", (req, res) => {
-  console.log('get-products')
   stripeApi.getProducts(res);
 });
 
 //get shipping rate
 app.post('/get-shipping-rate', jsonParser, (req, res) => {
-  console.log('get-shipping-rate')
   api.getShippingAndCheckoutURL(res, req.body);
 });
 

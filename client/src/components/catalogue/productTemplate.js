@@ -22,12 +22,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
     const location = useLocation()
 
     useEffect(() => {
-        if (location.pathname === '/' + product.id) {
-            console.log('works')
-            setIsProductPage(true)
-        } else {
-            setIsProductPage(false)
-        }
+        setIsProductPage(location.pathname === '/' + product.id)
     }, [location.pathname, product.id])
 
 
