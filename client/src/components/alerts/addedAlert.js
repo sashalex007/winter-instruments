@@ -12,7 +12,6 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 
 
-
 export default function AddedAlert({ open, setOpen, product }) {
     const handleClose = () => {
         setOpen(false);
@@ -42,7 +41,7 @@ export default function AddedAlert({ open, setOpen, product }) {
             <DialogActions>
                 <Stack direction="row" spacing={1}>
                     <Button onClick={handleClose}>Continue shopping</Button>
-                    <Button variant='contained' component={Link} to={'/cart'} onClick={handleClose} autoFocus>
+                    <Button variant='outlined' component={Link} to={'/cart'} onClick={handleClose} autoFocus>
                         Go to cart
                     </Button>
                 </Stack>

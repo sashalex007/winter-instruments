@@ -13,6 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Collapse from '@mui/material/Collapse';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 
 const stripe = loadStripe('pk_test_51N8o0fC48L00qx1Q0j0al75mo9VWVfYJxC2R7XFveKILBnykArws6yVIlAmxrX20EfsfvymzBZWtAKpByMKuqTYt00WVpLBnCY');
@@ -82,6 +83,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ m: 1, position: 'relative' }}>
               <Button
+                startIcon={<LocalShippingIcon />}
                 variant="contained"
                 disabled={loading || !addressComplete}
                 onClick={getShippingRate}

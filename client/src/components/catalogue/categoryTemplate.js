@@ -3,6 +3,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { Container } from '@mui/system';
+import Divider from '@mui/material/Divider';
 //components
 import ProductTemplate from './productTemplate';
 
@@ -12,11 +13,13 @@ export default function CategoryTemplate({ category, productList, cartFunctions 
 
     return (
         <Container>
-            <Typography gutterBottom variant="h4" component="div">
+            <Typography gutterBottom variant="h5" component="div">
                 {category.name}
             </Typography>
 
+            <Divider />
             <br></br>
+
             <Grid container spacing={3}>
                 {bucketedProductKeys.map(product => <ProductTemplate key={product} productName={product} productData={bucketedProductMap[product]} cartFunctions={cartFunctions} />)}
             </Grid>

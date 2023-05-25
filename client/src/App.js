@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 //ui
 import { Box } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { useMediaQuery } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 //logic
 import { api } from './functions/api';
 import CartObject from './functions/cartFunctionsAndData';
@@ -43,17 +46,17 @@ export default function App() {
     let productName = product[0].name;
     if ((product[0].metadata.name_variant !== undefined)) {
       productName = product[0].metadata.name_variant.split('_')[0];
-    } 
+    }
     const productList = {
       bucketedProductMap: {},
       bucketedProductKeys: [productName]
     }
     productList.bucketedProductMap[productName] = product;
-    
+
     function createEach(product, cartFunctions) {
       return (
         <Route exact path={product.id} key={product.id} element={
-          < CategoryTemplate category={{name:''}} cartFunctions={cartFunctions} productList={productList} />
+          < CategoryTemplate category={{ name: '' }} cartFunctions={cartFunctions} productList={productList} />
         }></Route>
       );
     }
@@ -63,22 +66,41 @@ export default function App() {
     );
   }
 
+  function BackButton() {
+    const navigate = useNavigate();
+    const location = useLocation()
+    function goBack() {
+      navigate(-1, { replace: true });
+    }
+    if (location.pathname === '/' || location.key === 'default' ) {
+      return (<br></br>)
+    }
+    return (
+      <Container>
+        <Stack direction="row" spacing={2} onClick={goBack}>
+          <Button variant="text" startIcon={<ArrowBackIcon />}>
+            Back
+          </Button>
+        </Stack>
+      </Container>
+    )
+  }
+
   const isXs = useMediaQuery("(max-width:600px)");
-  const styleXs = { p: 0, mt: 7, mb: 7 };
-  const styleSm = { p: 2, mt: 7, mb: 7 };
+  const styleXs = { p: 0, mt: 8, mb: 7 };
+  const styleSm = { p: 2, mt: 8, mb: 7 };
   return (
     <div className="App">
       <Container maxWidth="xl">
         <Box sx={isXs ? styleXs : styleSm}>
-          <br></br>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <ProductsLoading open={productObject.productCategoryList.length === 0} />
-
               <ErrorContext.Provider value={setError}>
                 <Router>
                   <ScrollToTop />
                   <NavBar cartObject={cartObject}></NavBar>
+                  <BackButton />
                   <Routes>
                     <Route exact path='/' element={< Catalogue productCategoryList={productObject.productCategoryList} />}></Route>
                     <Route exact path='/contact' element={< Contact />}></Route>

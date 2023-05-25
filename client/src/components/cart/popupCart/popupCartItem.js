@@ -13,17 +13,17 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 export default function PopupCartItem({ item, cartSize, cartFunctions, closeCart }) {
 
     return (
-        <ListItem onClick={closeCart} divider={true} style={{ cursor: 'default' }}>
+        <ListItem  divider={true} style={{ cursor: 'default' }}>
 
             <ListItemAvatar>
-                <Avatar component={Link} to={'/' + item.id} variant='rounded' alt="img" src={item.img}>
+                <Avatar onClick={closeCart} component={Link} to={'/' + item.id} variant='rounded' alt="img" src={item.img}>
                     <BrokenImageIcon />
                 </Avatar>
             </ListItemAvatar>
 
 
             <ListItemText>
-                <Link to={'/' + item.id} style={{ color: 'inherit', textDecoration: 'inherit' }} >
+                <Link onClick={closeCart} to={'/' + item.id} style={{ color: 'inherit', textDecoration: 'inherit' }} >
                     {item.quantity}x {item.name}
                 </Link>
             </ListItemText>
@@ -32,6 +32,7 @@ export default function PopupCartItem({ item, cartSize, cartFunctions, closeCart
             <Delete style={{ cursor: 'pointer' }} onClick={() => {
                 cartFunctions.deleteCartItem(item.price);
             }}></Delete>
+
             <Typography variant="body2" color="text.secondary">
                 {((item.unit_amount * item.quantity) / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
             </Typography>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 //ui
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -7,19 +7,34 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AddedAlert from '../alerts/addedAlert';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import Stack from '@mui/material/Stack';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import FormControl from '@mui/material/FormControl';
 
-
-export default function ProductTemplate({ productName, productData, cartFunctions}) {
+export default function ProductTemplate({ productName, productData, cartFunctions }) {
     const products = productData
-    const [ product, setProduct ] = useState(products[0])
+    const [product, setProduct] = useState(products[0])
+    const [isProductPage, setIsProductPage] = useState(false)
+    const location = useLocation()
+
+    useEffect(() => {
+        if (location.pathname === '/' + product.id) {
+            console.log('works')
+            setIsProductPage(true)
+        } else {
+            setIsProductPage(false)
+        }
+    }, [location.pathname, product.id])
+
 
     return (
         <Grid item xs>
-            <Card elevation={5} sx={{ maxWidth: 600, minWidth: 250, height: '100%' }}>
-                <CardActionArea component={Link} to={ '/'+ product.id} >
+            <Card elevation={5} sx={{ maxWidth: 600, minWidth: 270, height: '100%' }}>
+                <CardActionArea disabled={isProductPage} component={Link} to={'/' + product.id} >
                     <CardMedia
                         component="img"
                         height="140"
@@ -28,16 +43,17 @@ export default function ProductTemplate({ productName, productData, cartFunction
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                            {productName} - {(product.unit_amount/100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+                            {productName} - {(product.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {product.description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-                
+
                 <CardActions>
                     {CreateVariantSelector(products)}
+                    &nbsp;&nbsp;
                     {CreateAddButton(product)}
                 </CardActions>
             </Card>
@@ -46,52 +62,28 @@ export default function ProductTemplate({ productName, productData, cartFunction
 
     function CreateVariantSelector(products) {
 
-        const [anchorEl, setAnchorEl] = useState(null);
-        const open = Boolean(anchorEl);
-        const handleClick = (event) => {
-            setAnchorEl(event.currentTarget);
-        };
-        const handleClose = () => {
-            setAnchorEl(null);
-        };
-
         if (products.length > 1) return createVariantMenuandButton(products)
 
         function createVariantMenuandButton(products) {
             return (
-                <div>
-                    {product.variant_title}:
-                    <Button
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
+                <FormControl >
+                    <InputLabel id="demo-simple-select-label">{product.variant_title}</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={product.variant}
+                        label={product.variant_title}
                     >
-                        {product.variant}
-                    </Button>
-
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
-                    >
-
                         {products.map(block => createVariant(block))}
+                    </Select>
+                </FormControl>
 
-                    </Menu>
-                </div >
             );
         }
 
         function createVariant(newProduct) {
             return (
-                <MenuItem key={newProduct.default_price} onClick={() => {
-                    handleClose();
+                <MenuItem key={newProduct.default_price} value={newProduct.variant} onClick={() => {
                     setProduct(newProduct)
                 }}>{newProduct.variant}</MenuItem>
             );
@@ -104,8 +96,8 @@ export default function ProductTemplate({ productName, productData, cartFunction
             setOpen(true);
         };
         return (
-            <div>
-                <Button onClick={() => {
+            <Stack>
+                <Button size='large' startIcon={<AddShoppingCartIcon />} onClick={() => {
                     cartFunctions.addCartItem({
                         id: product.id,
                         price: product.default_price,
@@ -113,10 +105,11 @@ export default function ProductTemplate({ productName, productData, cartFunction
                         name: product.name,
                         img: product.images[0]
                     })
+
                     handleClickOpen();
-                }} variant="contained">Add to cart</Button>
+                }} variant="contained" disableElevation>Add to cart</Button>
                 <AddedAlert open={open} setOpen={setOpen} product={product} />
-            </div>
+            </Stack>
         );
     }
 }

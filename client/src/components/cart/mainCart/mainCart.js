@@ -7,6 +7,7 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import { ListItem } from '@mui/material';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 //components
 import MainCartItem from './mainCartItem';
 import ShippingItem from '../shippingItem';
@@ -24,7 +25,6 @@ export default function MainCart({ cartObject }) {
             <Typography gutterBottom variant="h4" component="div">
                 Cart
             </Typography>
-            <br></br>
             <Card elevation={0} sx={{ maxWidth: 600, minWidth: 250, height: '100%' }}>
                 <List>
                     {cartData.map(item =>
@@ -51,8 +51,8 @@ export default function MainCart({ cartObject }) {
                     <AddressForm shippingData={shippingData} cartData={cartData} cartFunctions={cartFunctions} />
 
                     {shippingData.isShipping && (
-                        <ListItem style={{ cursor: 'default' }}>
-                            <Button onClick={checkout} variant="contained">Checkout</Button>
+                        <ListItem>
+                            <Button startIcon={<ShoppingCartCheckoutIcon/>} onClick={checkout} variant="contained">Checkout</Button>
                         </ListItem>
                     )}
 
