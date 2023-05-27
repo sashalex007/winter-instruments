@@ -52,7 +52,7 @@ export default function MainCart({ cartObject }) {
 
                     {shippingData.isShipping && (
                         <ListItem>
-                            <Button startIcon={<ShoppingCartCheckoutIcon/>} onClick={checkout} variant="contained">Checkout</Button>
+                            <Button startIcon={<ShoppingCartCheckoutIcon/>} onClick={checkout} variant="contained" size='large'>Checkout</Button>
                         </ListItem>
                     )}
 

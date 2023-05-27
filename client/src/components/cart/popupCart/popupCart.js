@@ -88,7 +88,7 @@ export default function PopupCart({ cartObject }) {
                 </ListItem>
 
                 <ListItem >
-                    <Button component={Link} to={'/cart'} onClick={closeCart} variant="contained">View Cart</Button>
+                    <Button component={Link} to={'/cart'} onClick={closeCart} size='large' variant="outlined">View Cart</Button>
                 </ListItem>
             </Menu>
         </div>

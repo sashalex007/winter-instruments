@@ -19,6 +19,7 @@ import getNavItems from '../staticData/navItems';
 //components
 import PopupCart from './cart/popupCart/popupCart';
 
+
 const drawerWidth = 150;
 
 function HideOnScroll(props) {
@@ -76,6 +77,7 @@ export default function NavBar(props) {
             >
               <MenuIcon />
             </IconButton>
+            
 
             <Typography variant="h6" sx={{
               flexGrow: 1,
@@ -86,6 +88,7 @@ export default function NavBar(props) {
                 Winter Instruments
               </Link>
             </Typography>
+
             <PopupCart cartObject={cartObject}></PopupCart>
           </Toolbar>
         </AppBar>

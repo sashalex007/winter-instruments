@@ -85,6 +85,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
               <Button
                 startIcon={<LocalShippingIcon />}
                 variant="contained"
+                size="large"
                 disabled={loading || !addressComplete}
                 onClick={getShippingRate}
               >
