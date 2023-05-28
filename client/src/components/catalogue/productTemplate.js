@@ -16,12 +16,14 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FormControl from '@mui/material/FormControl';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function ProductTemplate({ productName, productData, cartFunctions }) {
     const products = productData
     const [product, setProduct] = useState(products[0])
     const [isProductPage, setIsProductPage] = useState(false)
     const [openImage, setOpenImage] = useState(false)
+    const [imageLoading, setImageLoading] = useState(true)
     const location = useLocation()
 
     //hide-show back button
@@ -35,8 +37,14 @@ export default function ProductTemplate({ productName, productData, cartFunction
         <Grid item xs>
             <Card elevation={5} sx={{ maxWidth: 600, minWidth: 270, height: '100%' }}>
 
-                <ProductActionArea />
+                <Box
+                    style={{ display: imageLoading ? "block" : "none" }}
+                    sx={{ height: isProductPage ? 300 : 170 }}>
+                    <CircularProgress
+                        sx={{ position: 'relative', top: '50%', left: '45%', transform: 'translate(-50%, -50%)' }} />
+                </Box>
 
+                <ProductActionArea />
                 <CardActions>
                     {CreateVariantSelector(products)}
                     &nbsp;&nbsp;
@@ -51,10 +59,13 @@ export default function ProductTemplate({ productName, productData, cartFunction
             <div>
                 <CardActionArea onClick={() => setOpenImage(true)} >
                     <CardMedia
+                        style={{ display: imageLoading ? "none" : "block" }}
                         component="img"
-                        height="140"
+                        height="300"
                         image={product.images[0]}
-                        alt={productName} />
+                        onLoad={() => { setImageLoading(false) }}
+                        alt={productName}>
+                    </CardMedia>
                 </CardActionArea>
                 <OpenImage />
                 <ProductContent />
@@ -62,12 +73,15 @@ export default function ProductTemplate({ productName, productData, cartFunction
         )
 
         return (
-            <CardActionArea disabled={isProductPage} component={Link} to={'/' + product.id} >
+            <CardActionArea component={Link} to={'/' + product.id} >
                 <CardMedia
+                    style={{ display: imageLoading ? "none" : "block" }}
                     component="img"
-                    height="140"
+                    height="170"
                     image={product.images[0]}
-                    alt={productName} />
+                    onLoad={() => { setImageLoading(false) }}
+                    alt={productName}>
+                </CardMedia>
                 <ProductContent />
             </CardActionArea>
         );
@@ -111,6 +125,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
             return (
                 <MenuItem key={newProduct.default_price} value={newProduct.variant} onClick={() => {
                     setProduct(newProduct)
+                    setImageLoading(true)
                 }}>{newProduct.variant}</MenuItem>
             );
         }
@@ -151,14 +166,14 @@ export default function ProductTemplate({ productName, productData, cartFunction
         };
         return (
             <Modal
-                sx={{'line-height': 0}}
+                sx={{ 'line-height': 0 }}
                 disableAutoFocus
                 open={openImage}
                 onClose={() => setOpenImage(false)}
                 onClick={() => setOpenImage(false)}
             >
                 <Box sx={style}>
-                    <img src={product.images[0]} alt={productName} style={{ maxWidth: "100%" }} />
+                    <img src={product.images[0]} alt={productName} style={{ maxWidth: "100%", 'border-radius': 5 }} />
                 </Box>
             </Modal>
         )

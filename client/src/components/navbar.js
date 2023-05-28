@@ -14,6 +14,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+import image from '../img/logoText.png';
 //logic
 import getNavItems from '../staticData/navItems';
 //components
@@ -77,16 +78,21 @@ export default function NavBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            
+            <Link to={"/"} style={{ color: 'inherit', textDecoration: 'inherit' }} >
+              <img src={image} alt="logo"
+                style={{ height: '25px', width: 'auto' }}
+                sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+              &nbsp;&nbsp;
+            </Link>
+
 
             <Typography variant="h6" sx={{
               flexGrow: 1,
               color: 'inherit',
               textDecoration: 'none'
             }}>
-              <Link to={"/"} style={{ color: 'inherit', textDecoration: 'inherit' }} >
-                Winter Instruments
-              </Link>
+
+
             </Typography>
 
             <PopupCart cartObject={cartObject}></PopupCart>
