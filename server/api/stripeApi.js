@@ -1,7 +1,6 @@
-import e from 'express';
 import Stripe from 'stripe';
-const stripe = Stripe('sk_test_51N8o0fC48L00qx1Q9wI1tdRtvFQA3iiERKleCAhYaDVhviObSZkfkjKnu5vRXQl4AbC69Xw1ihZo7he3qjLw381Z00qERUorgu');
-const YOUR_DOMAIN = 'http://localhost:3001';
+import { stripeKey, domain } from './variables.js';
+const stripe = Stripe(stripeKey);
 
 export const stripeApi = {
 
@@ -61,8 +60,8 @@ export const stripeApi = {
             const session = await stripe.checkout.sessions.create({
                 line_items: cleanedItems,
                 mode: 'payment',
-                success_url: `${YOUR_DOMAIN}/payment-success`,
-                cancel_url: `${YOUR_DOMAIN}/cart`,
+                success_url: `${domain}/payment-success`,
+                cancel_url: `${domain}/cart`,
                 allow_promotion_codes: true,
                 metadata: {
                     city: verifiedAddress.city,

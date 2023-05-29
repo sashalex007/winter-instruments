@@ -1,5 +1,6 @@
 import EasyPost from '@easypost/api';
-const client = new EasyPost('kZCIMwhLY5NDy27ZyzwbVQ')
+import { easypostKey } from './variables.js';
+const client = new EasyPost(easypostKey)
 
 export const easypostApi = {
 
