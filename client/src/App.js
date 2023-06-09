@@ -9,9 +9,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 //logic
-import { api } from './functions/api';
-import CartObject from './functions/cartFunctionsAndData';
-import ScrollToTop from './functions/scrollToTop';
+import { api } from './logic/api';
+import CartObject from './logic/cartFunctionsAndData';
+import ScrollToTop from './logic/scrollToTop';
 //components
 import ProductsLoading from './components/alerts/productsLoading';
 import ErrorAlert from './components/alerts/errorAlert';

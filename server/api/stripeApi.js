@@ -6,8 +6,8 @@ export const stripeApi = {
 
     getProducts: async (res) => {
         try {
-            const products = await stripe.products.list({active: true});
-            const prices = await stripe.prices.list({active: true});
+            const products = await stripe.products.list({active: true, limit:100});
+            const prices = await stripe.prices.list({active: true, limit:100});
             if (products.length === 0 || prices.length === 0) //stripe sends empty product or prices if request fails
                 throw new Error('No products found');
             res.json({ products: products.data, prices: prices.data });
@@ -77,7 +77,7 @@ export const stripeApi = {
                         type: 'fixed_amount',
                         fixed_amount: {
                             amount: shippingRate,
-                            currency: 'USD',
+                            currency: 'CAD',
                         }
                     }
                 }]
@@ -86,6 +86,17 @@ export const stripeApi = {
         }
         catch (err) {
             err.message = err.message + ' -createCheckoutSession'
+            throw err
+        }
+    },
+
+    createProduct: async (productData) => {
+        try {
+            const product = await stripe.products.create(productData);
+            return product;
+        }
+        catch (err) {
+            err.message = err.message + ' -createProduct'
             throw err
         }
     }

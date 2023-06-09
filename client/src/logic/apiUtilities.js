@@ -56,6 +56,6 @@ export const apiUtilities = {
             })
             bucketedProductCategoryMap[category.name] = { bucketedProductKeys, bucketedProductMap }
         })
-        return {bucketedProductCategoryMap, flatProductList};
+        return { bucketedProductCategoryMap, flatProductList };
     }
 }

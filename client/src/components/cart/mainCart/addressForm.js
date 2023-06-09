@@ -4,7 +4,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { AddressElement } from '@stripe/react-stripe-js';
 //logic
-import { api } from '../../../functions/api';
+import { api } from '../../../logic/api';
 import { ErrorContext } from '../../../App';
 //ui
 import Button from '@mui/material/Button';

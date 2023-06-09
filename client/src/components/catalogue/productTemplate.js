@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { Button, CardActionArea, CardActions, LinearProgress } from '@mui/material';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import AddedAlert from '../alerts/addedAlert';
 import Select from '@mui/material/Select';
@@ -20,6 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 export default function ProductTemplate({ productName, productData, cartFunctions }) {
     const products = productData
+    products.sort((a, b) => b.variant-a.variant)
     const [product, setProduct] = useState(products[0])
     const [isProductPage, setIsProductPage] = useState(false)
     const [openImage, setOpenImage] = useState(false)
@@ -35,7 +36,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
 
     return (
         <Grid item xs>
-            <Card elevation={5} sx={{ maxWidth: 600, minWidth: 270, height: '100%' }}>
+            <Card elevation={5} sx={{ maxWidth: 600, minWidth: 300, height: '100%' }}>
 
                 <Box
                     style={{ display: imageLoading ? "block" : "none" }}
@@ -88,13 +89,15 @@ export default function ProductTemplate({ productName, productData, cartFunction
     }
 
     function ProductContent() {
+        let description = product.metadata.description || product.description
+        if (description.length > 50 && !isProductPage) description = description.substring(0, 50) + '...'
         return (
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {productName} - {(product.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {product.description}
+                    {description}
                 </Typography>
             </CardContent>
         );
