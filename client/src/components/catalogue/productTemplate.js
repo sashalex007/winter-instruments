@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 //ui
 import Card from '@mui/material/Card';
@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import AddedAlert from '../alerts/addedAlert';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
@@ -17,6 +16,9 @@ import FormControl from '@mui/material/FormControl';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+//components
+import AddedAlert from '../alerts/addedAlert';
+
 
 export default function ProductTemplate({ productName, productData, cartFunctions }) {
     const products = productData

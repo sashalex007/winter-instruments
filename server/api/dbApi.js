@@ -66,6 +66,6 @@ export const dbApi = {
 
 }
 
-dbApi.syncWithStripe();
+//dbApi.syncWithStripe();
 //dbApi.getCategoryList();
 //dbApi.getCategoryProducts('Under-sole canting');
