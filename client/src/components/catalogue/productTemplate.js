@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 //ui
 import Card from '@mui/material/Card';
@@ -27,12 +27,13 @@ export default function ProductTemplate({ productName, productData, cartFunction
     const [imageLoading, setImageLoading] = useState(true)
     const location = useLocation()
 
-    //hide-show back button
     useEffect(() => {
-        const variantSet = new Set()
-        products.forEach(product => { variantSet.add('/' + product.id) });
-        setIsProductPage(variantSet.has(location.pathname))
-    }, [products, location.pathname, product.id])
+        let param = new URLSearchParams(location.search)
+        const ID = param.get('id')
+        products.forEach(product => {
+            if (ID == product.id) setIsProductPage(true)
+        })
+    }, [location])
 
     return (
         <Grid item xs>
@@ -74,7 +75,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
         )
 
         return (
-            <CardActionArea component={Link} to={'/' + product.id} >
+            <CardActionArea component={Link} to={location.pathname + '?id=' + product.id} >
                 <CardMedia
                     style={{ display: imageLoading ? "none" : "block" }}
                     component="img"

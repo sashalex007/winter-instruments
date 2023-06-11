@@ -1,3 +1,4 @@
+import { dbApi } from './api/dbApi.js';
 import { stripeApi } from './api/stripeApi.js';
 import { api } from './api/api.js';
 import path, { resolve } from 'path';
@@ -21,6 +22,21 @@ app.use(express.static(resolve(__dirname, '../client/build')));
 //get products
 app.get("/get-products", (req, res) => {
   stripeApi.getProducts(res);
+});
+
+//get category list
+app.get("/get-category-list", (req, res) => {
+  dbApi.getCategoryList(res);
+});
+
+//get category products
+app.post("/get-category-products", jsonParser, (req, res) => {
+  dbApi.getCategoryProducts(res, req.body.category);
+});
+
+//get single product
+app.post("/get-single-product", jsonParser, (req, res) => {
+  dbApi.getSingleProduct(res, req.body.productID);
 });
 
 //get shipping rate

@@ -19,6 +19,27 @@ export const stripeApi = {
         }
     },
 
+    getAllProductData: async () => {
+        return await helper([], [], {id: {}});
+
+        async function helper(products, prices, startingAfter) {
+            try {
+                const productsResponse = await stripe.products.list({ active: true, limit: 100, starting_after: startingAfter.id });
+                const pricesResponse = await stripe.prices.list({ active: true, limit: 100, starting_after: startingAfter.id });
+                products = products.concat(productsResponse.data);
+                prices = prices.concat(pricesResponse.data);
+                if (productsResponse.has_more) {
+                    return await helper(products, prices, productsResponse.data[productsResponse.data.length - 1]);
+                }
+                return { products, prices }
+            }
+            catch (err) {
+                err.message = err.message + ' -getAllProducts'
+                throw err
+            }
+        }
+    },
+
     verifyProducts: async (items) => {
         const productIdList = items.map(item => item.id);
         try {

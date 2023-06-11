@@ -1,4 +1,4 @@
-export const apiUtilities = {
+export const dbUtilities = {
 
     mergeProductsAndPrices: (prices, products) => {
         const priceObject = {}
@@ -19,7 +19,7 @@ export const apiUtilities = {
             }
         })
 
-        const {bucketedProductCategoryMap, flatProductList} = apiUtilities.bucketProductsByVariant(productCategoryList, productCategoryMap);
+        const {bucketedProductCategoryMap, flatProductList} = dbUtilities.bucketProductsByVariant(productCategoryList, productCategoryMap);
         return { productCategoryList, productCategoryMap: bucketedProductCategoryMap, flatProductList };
     },
     
@@ -31,6 +31,7 @@ export const apiUtilities = {
             const productList = productCategoryMap[category.name]
             const bucketedProductMap = {}
             const bucketedProductKeys = []
+            const bucketedProductIDMap = {}
 
             productList.forEach(product => {
                 let bucket = ''
@@ -43,19 +44,43 @@ export const apiUtilities = {
                     product.variant = metadata[2]
                 }
 
+                bucketedProductIDMap[product.id] = bucket
                 if (bucketedProductMap[bucket] === undefined) {
                     bucketedProductKeys.push(bucket)
                     bucketedProductMap[bucket] = [product]
 
                     flatProductMap[bucket] = flatProductList.length
-                    flatProductList.push([product])
+                    flatProductList.push({
+                        bucketedProductKeys: [bucket],
+                        bucketedProductMap: { [bucket]: [product] },
+                        bucketedProductIDMap: { [product.id]: bucket },
+                        flat: true
+                    })
                 } else {
                     bucketedProductMap[bucket].push(product)
-                    flatProductList[flatProductMap[bucket]].push(product)
+                    flatProductList[flatProductMap[bucket]].bucketedProductMap[bucket].push(product)
+                    flatProductList[flatProductMap[bucket]].bucketedProductIDMap[product.id] = bucket
                 }
             })
-            bucketedProductCategoryMap[category.name] = { bucketedProductKeys, bucketedProductMap }
+            bucketedProductCategoryMap[category.name] = { bucketedProductKeys, bucketedProductMap, bucketedProductIDMap }
         })
-        return { bucketedProductCategoryMap, flatProductList };
+
+        const productObjectArray = []
+        for (const key in bucketedProductCategoryMap) {
+            const temp = {}
+            temp[key] = bucketedProductCategoryMap[key]
+            productObjectArray.push(temp)
+        }
+
+        const flatObjectArray = []
+        for (let productObject of flatProductList) {
+            const key = productObject.bucketedProductKeys[0]
+            for (let variant of productObject.bucketedProductMap[key]) {
+                const temp = {}
+                temp[variant.id] = productObject
+                flatObjectArray.push(temp)
+            }
+        }
+        return { bucketedProductCategoryMap: productObjectArray, flatProductList: flatObjectArray };
     }
 }

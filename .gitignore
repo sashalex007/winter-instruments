@@ -4,4 +4,5 @@ client/build
 server/node_modules
 npm-debug.log
 .env
+server/api/.env
 .DS_Store

@@ -20,20 +20,20 @@ const stripe = loadStripe('pk_test_51N8o0fC48L00qx1Q0j0al75mo9VWVfYJxC2R7XFveKIL
 
 export default function AddressForm({ shippingData, cartData, cartFunctions }) {
 
-  const testAddress = {
-    name: 'Jane Doe',
-    address: {
-      line1: '354 Oyster Point Blvd',
-      line2: '',
-      city: 'South San Francisco',
-      state: 'CA',
-      postal_code: '94080',
-      country: 'US',
-      name: 'Jane Doe',
-    }
-  }
+  // const testAddress = {
+  //   name: 'Jane Doe',
+  //   address: {
+  //     line1: '354 Oyster Point Blvd',
+  //     line2: '',
+  //     city: 'South San Francisco',
+  //     state: 'CA',
+  //     postal_code: '94080',
+  //     country: 'US',
+  //     name: 'Jane Doe',
+  //   }
+  // }
 
-  const [address, setAddress] = useState(testAddress)
+  const [address, setAddress] = useState({})
   const [addressComplete, setAddressComplete] = useState(false)
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -61,7 +61,6 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
             <form>
               <h3>Shipping</h3>
               <AddressElement options={{
-                defaultValues: testAddress,
                 mode: 'shipping',
                 allowedCountries: ['US', 'CA', 'GB', 'FR', 'DE', 'AU', 'JP', 'NZ', 'SG'],
                 blockPoBox: true,

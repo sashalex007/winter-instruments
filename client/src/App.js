@@ -27,42 +27,17 @@ export const ErrorContext = React.createContext();
 export default function App() {
   const cartObject = CartObject();
   const [error, setError] = useState({ open: false, message: '' });
-  const [productObject, setProductObject] = useState({ productCategoryList: [], productCategoryMap: {}, flatProductList: [] });
+  const [categoryList, setCategoryList] = useState([]);
 
   useEffect(() => {
-    api.getProducts(setProductObject, setError)
+    api.getCategoryList(setCategoryList, setError)
   }, []);
 
   function createCategoryRoute(category, cartFunctions) {
-    const productList = productObject.productCategoryMap[category.name];
     return (
       <Route exact path={category.link} key={category.link} element={
-        < CategoryTemplate category={category} cartFunctions={cartFunctions} productList={productList} />
+        < CategoryTemplate category={category} cartFunctions={cartFunctions} />
       }></Route>
-    );
-  }
-
-  function createProductRoute(product, cartFunctions) {
-    let productName = product[0].name;
-    if ((product[0].metadata.name_variant !== undefined)) {
-      productName = product[0].metadata.name_variant.split('_')[0];
-    }
-    const productList = {
-      bucketedProductMap: {},
-      bucketedProductKeys: [productName]
-    }
-    productList.bucketedProductMap[productName] = product;
-
-    function createEach(product, cartFunctions) {
-      return (
-        <Route exact path={product.id} key={product.id} element={
-          < CategoryTemplate category={{ name: '' }} cartFunctions={cartFunctions} productList={productList} />
-        }></Route>
-      );
-    }
-
-    return (
-      product.map(product => createEach(product, cartFunctions))
     );
   }
 
@@ -72,7 +47,7 @@ export default function App() {
     function goBack() {
       navigate(-1, { replace: true });
     }
-    if (location.pathname === '/' || location.key === 'default' ) {
+    if (location.pathname === '/' || location.key === 'default') {
       return (<br></br>)
     }
     return (
@@ -95,19 +70,20 @@ export default function App() {
         <Box sx={isXs ? styleXs : styleSm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <ProductsLoading open={productObject.productCategoryList.length === 0} />
+          
+              <ProductsLoading open={categoryList.length === 0} />
+
               <ErrorContext.Provider value={setError}>
                 <Router>
                   <ScrollToTop />
                   <NavBar cartObject={cartObject}></NavBar>
                   <BackButton />
                   <Routes>
-                    <Route exact path='/' element={< Catalogue productCategoryList={productObject.productCategoryList} />}></Route>
+                    <Route exact path='/' element={< Catalogue productCategoryList={categoryList} />}></Route>
                     <Route exact path='/contact' element={< Contact />}></Route>
                     <Route exact path='/cart' element={< MainCart cartObject={cartObject} />}></Route>
                     <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartObject.cartFunctions} />}></Route>
-                    {productObject.productCategoryList.map(category => createCategoryRoute(category, cartObject.cartFunctions))}
-                    {productObject.flatProductList.map(product => createProductRoute(product, cartObject.cartFunctions))}
+                    {categoryList.map(category => createCategoryRoute(category, cartObject.cartFunctions))}
                   </Routes>
                 </Router>
               </ErrorContext.Provider>
