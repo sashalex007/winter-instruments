@@ -25,6 +25,7 @@ export default function CategoryTemplate({ category, cartFunctions }) {
 
     useEffect(() => {
         if (!productQuery && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
+            if (productObject.flat) setProductObject({ bucketedProductKeys: [], bucketedProductMap: {}, bucketedProductIDMap: {} })
             api.getCategoryProducts(setProductObject, category.name, setError)
         }
         else if (productQuery && productObject.bucketedProductKeys.length === 0) {
