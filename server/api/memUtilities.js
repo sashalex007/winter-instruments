@@ -1,4 +1,4 @@
-export const dbUtilities = {
+export const memUtilities = {
 
     mergeProductsAndPrices: (prices, products) => {
         const priceObject = {}
@@ -19,7 +19,7 @@ export const dbUtilities = {
             }
         })
 
-        const {bucketedProductCategoryMap, flatProductList} = dbUtilities.bucketProductsByVariant(productCategoryList, productCategoryMap);
+        const {bucketedProductCategoryMap, flatProductList} = memUtilities.bucketProductsByVariant(productCategoryList, productCategoryMap);
         return { productCategoryList, productCategoryMap: bucketedProductCategoryMap, flatProductList };
     },
     
@@ -72,15 +72,13 @@ export const dbUtilities = {
             productObjectArray.push(temp)
         }
 
-        const flatObjectArray = []
+        const flatObjectArray = {}
         for (let productObject of flatProductList) {
             const key = productObject.bucketedProductKeys[0]
             for (let variant of productObject.bucketedProductMap[key]) {
-                const temp = {}
-                temp[variant.id] = productObject
-                flatObjectArray.push(temp)
+                flatObjectArray[variant.id] = productObject
             }
         }
-        return { bucketedProductCategoryMap: productObjectArray, flatProductList: flatObjectArray };
+        return { bucketedProductCategoryMap, flatProductList: flatObjectArray };
     }
 }

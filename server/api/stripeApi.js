@@ -4,21 +4,6 @@ const stripe = Stripe(stripeKey);
 
 export const stripeApi = {
 
-    getProducts: async (res) => {
-        try {
-            const products = await stripe.products.list({active: true, limit:100});
-            const prices = await stripe.prices.list({active: true, limit:100});
-            if (products.length === 0 || prices.length === 0) //stripe sends empty product or prices if request fails
-                throw new Error('No products found');
-            res.json({ products: products.data, prices: prices.data });
-        }
-        catch (err) {
-            err.message = err.message + ' -getProducts'
-            console.log(err);
-            res.json({ error: err.message });
-        }
-    },
-
     getAllProductData: async () => {
         return await helper([], [], {id: {}});
 
