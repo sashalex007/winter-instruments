@@ -1,3 +1,4 @@
+import { apiLimiter } from './utilities/rateLimiter.js';
 import { memoryService } from './service/memoryService/inMemoryStore.js';
 import { mainService } from './service/mainService.js';
 import path, { resolve } from 'path';
@@ -27,7 +28,7 @@ app.get("/get-category-list", (req, res) => {
 });
 
 //get category products
-app.post("/get-category-products", jsonParser, (req, res) => {
+app.post("/get-category-products", jsonParser,(req, res) => {
   memoryService.getCategoryProducts(res, req.body.category);
 });
 
@@ -37,7 +38,7 @@ app.post("/get-single-product", jsonParser, (req, res) => {
 });
 
 //get shipping rate
-app.post('/get-shipping-rate', jsonParser, (req, res) => {
+app.post('/get-shipping-rate', jsonParser, apiLimiter, (req, res) => {
   mainService.getShippingAndCheckoutURL(res, req.body);
 });
 
