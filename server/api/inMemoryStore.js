@@ -7,6 +7,7 @@ let syncComplete = false;
 export const memApi = {
 
     syncWithStripe: async () => {
+        syncComplete = false;
         try {
             console.log('Syncing with Stripe...');
             const { products, prices } = await stripeApi.getAllProductData();
@@ -22,7 +23,7 @@ export const memApi = {
             err.message = err.message + ' -syncWithStripe'
             console.log(err);
         }
-        
+
     },
 
     getCategoryList: (res) => {

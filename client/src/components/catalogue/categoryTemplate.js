@@ -39,7 +39,7 @@ export default function CategoryTemplate({ category, cartFunctions }) {
 
     return (
         <Container>
-            <ProductsLoading open={productObject.bucketedProductKeys.length === 0}/>
+            {/* <ProductsLoading open={productObject.bucketedProductKeys.length === 0}/> */}
 
             <Typography gutterBottom variant="h5" component="div">
                 {!productQuery && category.name}

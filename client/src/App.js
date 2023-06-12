@@ -71,7 +71,7 @@ export default function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
           
-              <ProductsLoading open={categoryList.length === 0} />
+              {/* <ProductsLoading open={categoryList.length === 0} /> */}
 
               <ErrorContext.Provider value={setError}>
                 <Router>
