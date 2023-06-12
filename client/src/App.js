@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 //logic
 import { api } from './logic/api';
-import CartObject from './logic/cartFunctionsAndData';
+import CartService from './logic/cartService';
 import ScrollToTop from './logic/scrollToTop';
 //components
 import ProductsLoading from './components/alerts/productsLoading';
@@ -25,7 +25,7 @@ import CategoryTemplate from './components/catalogue/categoryTemplate';
 export const ErrorContext = React.createContext();
 
 export default function App() {
-  const cartObject = CartObject();
+  const cartService = CartService();
   const [error, setError] = useState({ open: false, message: '' });
   const [categoryList, setCategoryList] = useState([]);
 
@@ -76,14 +76,14 @@ export default function App() {
               <ErrorContext.Provider value={setError}>
                 <Router>
                   <ScrollToTop />
-                  <NavBar cartObject={cartObject}></NavBar>
+                  <NavBar cartObject={cartService}></NavBar>
                   <BackButton />
                   <Routes>
                     <Route exact path='/' element={< Catalogue productCategoryList={categoryList} />}></Route>
                     <Route exact path='/contact' element={< Contact />}></Route>
-                    <Route exact path='/cart' element={< MainCart cartObject={cartObject} />}></Route>
-                    <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartObject.cartFunctions} />}></Route>
-                    {categoryList.map(category => createCategoryRoute(category, cartObject.cartFunctions))}
+                    <Route exact path='/cart' element={< MainCart cartObject={cartService} />}></Route>
+                    <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartService.cartFunctions} />}></Route>
+                    {categoryList.map(category => createCategoryRoute(category, cartService.cartFunctions))}
                   </Routes>
                 </Router>
               </ErrorContext.Provider>

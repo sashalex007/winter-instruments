@@ -1,8 +1,8 @@
 import EasyPost from '@easypost/api';
-import { easypostKey } from './variables.js';
+import { easypostKey } from '../../utilities/variables.js';
 const client = new EasyPost(easypostKey)
 
-export const easypostApi = {
+export const easypostService = {
 
     verfifyAddress: async (address) => { 
         try {

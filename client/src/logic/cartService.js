@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function CartFunctions() {
+export default function CartService() {
 
     //create cart data from local storage
     const [cartData, setCartData] = useState([]);

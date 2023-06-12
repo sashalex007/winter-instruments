@@ -33,9 +33,9 @@ export default function ProductTemplate({ productName, productData, cartFunction
         let param = new URLSearchParams(location.search)
         const ID = param.get('id')
         products.forEach(product => {
-            if (ID == product.id) setIsProductPage(true)
+            if (ID === product.id) setIsProductPage(true)
         })
-    }, [location])
+    }, [location, products])
 
     return (
         <Grid item xs>

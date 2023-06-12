@@ -1,8 +1,8 @@
 import Stripe from 'stripe';
-import { stripeKey, domain } from './variables.js';
+import { stripeKey, domain } from '../../utilities/variables.js';
 const stripe = Stripe(stripeKey);
 
-export const stripeApi = {
+export const stripeService = {
 
     getAllProductData: async () => {
         return await helper([], [], {id: {}});

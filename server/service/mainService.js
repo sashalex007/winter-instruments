@@ -1,13 +1,14 @@
-import { stripeApi } from './stripeApi.js';
-import { easypostApi } from './easypostApi.js';
+import { stripeService } from './externalServices/stripeService.js';
+import { easypostService } from './externalServices/easypostService.js';
 
-export const api = {
+export const mainService = {
+
     getShippingAndCheckoutURL: async (res, { address, items }) => {
         try {
-            const verifiedProducts = await stripeApi.verifyProducts(items)
-            const verifiedAddress = await easypostApi.verfifyAddress(address);
-            const shippingRate = await easypostApi.getShippingRates(verifiedAddress, verifiedProducts, items);
-            const checkoutSessionURL = await stripeApi.createCheckoutSession(items, verifiedAddress, shippingRate.rate);
+            const verifiedProducts = await stripeService.verifyProducts(items)
+            const verifiedAddress = await easypostService.verfifyAddress(address);
+            const shippingRate = await easypostService.getShippingRates(verifiedAddress, verifiedProducts, items);
+            const checkoutSessionURL = await stripeService.createCheckoutSession(items, verifiedAddress, shippingRate.rate);
 
             const checkoutData = {
                 shipping: {

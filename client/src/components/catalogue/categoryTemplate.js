@@ -19,22 +19,18 @@ export default function CategoryTemplate({ category, cartFunctions }) {
     function useQuery() {
         const { search } = useLocation();
         const param = useMemo(() => new URLSearchParams(search), [search]).get('id')
-        if (!param && productObject.flat) {
-            setProductObject({ bucketedProductKeys: [], bucketedProductMap: {}, bucketedProductIDMap: {} })
-            api.getCategoryProducts(setProductObject, category.name, setError)
-        }
         return param
     }
     const productQuery = useQuery();
 
     useEffect(() => {
-        if (!productQuery) {
+        if (!productQuery && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
             api.getCategoryProducts(setProductObject, category.name, setError)
         }
-        else {
+        else if (productQuery && productObject.bucketedProductKeys.length === 0) {
             api.getSingleProduct(setProductObject, productQuery, setError)
         }
-    }, []);
+    }, [productQuery, category.name, setError]);
 
 
     return (

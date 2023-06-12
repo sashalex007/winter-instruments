@@ -65,20 +65,14 @@ export const memUtilities = {
             bucketedProductCategoryMap[category.name] = { bucketedProductKeys, bucketedProductMap, bucketedProductIDMap }
         })
 
-        const productObjectArray = []
-        for (const key in bucketedProductCategoryMap) {
-            const temp = {}
-            temp[key] = bucketedProductCategoryMap[key]
-            productObjectArray.push(temp)
-        }
 
-        const flatObjectArray = {}
+        const expandedFlatProductObject = {}
         for (let productObject of flatProductList) {
             const key = productObject.bucketedProductKeys[0]
             for (let variant of productObject.bucketedProductMap[key]) {
-                flatObjectArray[variant.id] = productObject
+                expandedFlatProductObject[variant.id] = productObject
             }
         }
-        return { bucketedProductCategoryMap, flatProductList: flatObjectArray };
+        return { bucketedProductCategoryMap, flatProductList: expandedFlatProductObject };
     }
 }

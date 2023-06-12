@@ -1,16 +1,16 @@
 import { memUtilities } from "./memUtilities.js";
-import { stripeApi } from "./stripeApi.js";
+import { stripeService } from "../externalServices/stripeService.js";
 
 const stripeData = {}
 let syncComplete = false;
 
-export const memApi = {
+export const memoryService = {
 
     syncWithStripe: async () => {
         syncComplete = false;
         try {
             console.log('Syncing with Stripe...');
-            const { products, prices } = await stripeApi.getAllProductData();
+            const { products, prices } = await stripeService.getAllProductData();
             const productObject = memUtilities.mergeProductsAndPrices(prices, products);
 
             stripeData.sortedProducts = productObject.productCategoryMap;
@@ -23,21 +23,20 @@ export const memApi = {
             err.message = err.message + ' -syncWithStripe'
             console.log(err);
         }
-
     },
 
     getCategoryList: (res) => {
-        if (!syncComplete) return memApi.syncInProgress(res);
+        if (!syncComplete) return memoryService.syncInProgress(res);
         res.json(stripeData.categoryData.list);
     },
 
     getCategoryProducts: (res, category) => {
-        if (!syncComplete) return memApi.syncInProgress(res);
+        if (!syncComplete) return memoryService.syncInProgress(res);
         res.json(stripeData.sortedProducts[category]);
     },
 
     getSingleProduct: (res, productID) => {
-        if (!syncComplete) return memApi.syncInProgress(res);
+        if (!syncComplete) return memoryService.syncInProgress(res);
         res.json(stripeData.flatProducts[productID]);
     },
 
