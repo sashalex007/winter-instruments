@@ -1,6 +1,6 @@
 import { apiLimiter } from './utilities/rateLimiter.js';
-import { memoryService } from './service/memoryService/inMemoryStore.js';
-import { mainService } from './service/mainService.js';
+import { memoryService } from './services/memoryService/inMemoryStore.js';
+import { mainService } from './services/mainService.js';
 import path, { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
