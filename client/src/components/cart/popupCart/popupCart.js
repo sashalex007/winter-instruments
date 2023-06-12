@@ -69,7 +69,6 @@ export default function PopupCart({ cartObject }) {
                     <PopupCartItem
                         key={item.price}
                         item={item}
-                        cartSize={cartSize}
                         cartFunctions={cartFunctions}
                         closeCart={closeCart} />)}
 

@@ -10,20 +10,20 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 
 
-export default function PopupCartItem({ item, cartSize, cartFunctions, closeCart }) {
+export default function PopupCartItem({ item, cartFunctions, closeCart }) {
 
     return (
         <ListItem  divider={true} style={{ cursor: 'default' }}>
 
             <ListItemAvatar>
-                <Avatar onClick={closeCart} component={Link} to={'/' + item.id} variant='rounded' alt="img" src={item.img}>
+                <Avatar onClick={closeCart} component={Link} to={item.category_route + '?id=' + item.id} variant='rounded' alt="img" src={item.img}>
                     <BrokenImageIcon />
                 </Avatar>
             </ListItemAvatar>
 
 
             <ListItemText>
-                <Link onClick={closeCart} to={'/' + item.id} style={{ color: 'inherit', textDecoration: 'inherit' }} >
+                <Link onClick={closeCart} to={item.category_route + '?id=' + item.id} style={{ color: 'inherit', textDecoration: 'inherit' }} >
                     {item.quantity}x {item.name}
                 </Link>
             </ListItemText>

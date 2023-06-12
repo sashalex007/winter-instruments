@@ -42,7 +42,8 @@ export default function CartService() {
                     price: product.price,
                     unit_amount: product.unit_amount,
                     quantity: 1,
-                    img: product.img
+                    img: product.img,
+                    category_route: product.category_route,
                 })
             }
     

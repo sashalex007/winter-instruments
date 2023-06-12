@@ -150,7 +150,8 @@ export default function ProductTemplate({ productName, productData, cartFunction
                         price: product.default_price,
                         unit_amount: product.unit_amount,
                         name: product.name,
-                        img: product.images[0]
+                        img: product.images[0],
+                        category_route: location.pathname,
                     })
 
                     handleClickOpen();

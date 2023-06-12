@@ -13,7 +13,7 @@ import Avatar from '@mui/material/Avatar';
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 
 export default function MainCartItem({ item, cartFunctions }) {
-
+    
     return (
         <ListItem divider={true} style={{ cursor: 'default' }}>
 
@@ -33,14 +33,14 @@ export default function MainCartItem({ item, cartFunctions }) {
 
 
             <ListItemAvatar>
-                <Avatar component={Link} to={'/' + item.id} variant='rounded' alt="img" src={item.img}>
+                <Avatar component={Link} to={item.category_route + '?id=' + item.id} variant='rounded' alt="img" src={item.img}>
                     <BrokenImageIcon />
                 </Avatar>
             </ListItemAvatar>
 
 
             <ListItemText>
-                <Link to={'/' + item.id} style={{ color: 'inherit', textDecoration: 'inherit'}} >
+                <Link to={item.category_route + '?id=' + item.id} style={{ color: 'inherit', textDecoration: 'inherit'}} >
                     {item.name} - {(item.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
                 </Link>
             </ListItemText>
