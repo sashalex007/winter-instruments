@@ -2,6 +2,6 @@
 
 ![Screenshot](screenshot.png)
 
-### Demo: https://winter-insruments.shop
+### Demo: https://winterinsruments.shop
 
 TODO: description

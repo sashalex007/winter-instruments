@@ -65,7 +65,6 @@ export const memUtilities = {
             bucketedProductCategoryMap[category.name] = { bucketedProductKeys, bucketedProductMap, bucketedProductIDMap }
         })
 
-
         const expandedFlatProductObject = {}
         for (let productObject of flatProductList) {
             const key = productObject.bucketedProductKeys[0]
