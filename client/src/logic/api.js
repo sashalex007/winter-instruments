@@ -1,5 +1,4 @@
-
-const test = false
+const cache = {categoryProducts: {}, singleProducts: {}}
 
 export const api = {
 
@@ -17,6 +16,7 @@ export const api = {
     },
 
     getCategoryProducts: async (setProductObject, category, setError) => {
+        if (cache.categoryProducts[category]) return setProductObject(cache.categoryProducts[category])
         try {
             const data = await fetch('/get-category-products', {
                 method: 'POST',
@@ -27,6 +27,7 @@ export const api = {
             });
             const dataJson = await data.json();
             if (dataJson.error) throw new Error(dataJson.error);
+            cache.categoryProducts[category] = dataJson;
             setProductObject(dataJson);
         }
         catch (err) {
@@ -35,9 +36,8 @@ export const api = {
         }
     },
 
-    currentProduct: null, //used to prevent duplicate fetches- dirty hack
-
     getSingleProduct: async (setProductObject, productID, setError) => {
+        if (cache.singleProducts[productID]) return setProductObject(cache.singleProducts[productID])
         try {
             const data = await fetch('/get-single-product', {
                 method: 'POST',
@@ -48,6 +48,7 @@ export const api = {
             });
             const dataJson = await data.json();
             if (dataJson.error) throw new Error(dataJson.error);
+            cache.singleProducts[productID] = dataJson;
             setProductObject(dataJson);
         }
         catch (err) {
@@ -57,12 +58,7 @@ export const api = {
     },
 
     getShippingRate: async (setShippingData, address, cartData, setError, setLoading, setSuccess) => {
-        if (test) return api.getTestShippingRate(setShippingData, address, setLoading, setSuccess);
-        const shippingRateObject = {
-            address: address,
-            items: cartData
-        }
-
+        const shippingRateObject = { address: address, items: cartData }
         try {
             const data = await fetch('/get-shipping-rate', {
                 method: 'POST',

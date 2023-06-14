@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 //ui
 import Typography from '@mui/material/Typography';
@@ -7,7 +7,6 @@ import { Container } from '@mui/system';
 import Divider from '@mui/material/Divider';
 //components
 import ProductTemplate from './productTemplate';
-import ProductsLoading from '../alerts/productsLoading';
 //logic
 import { api } from '../../logic/api';
 import { ErrorContext } from '../../App';
@@ -16,42 +15,42 @@ export default function CategoryTemplate({ category, cartFunctions }) {
     const [productObject, setProductObject] = useState({ bucketedProductKeys: [], bucketedProductMap: {}, bucketedProductIDMap: {} });
     const setError = useContext(ErrorContext);
 
-    function useQuery() {
+    function useProductID() {
         const { search } = useLocation();
-        const param = useMemo(() => new URLSearchParams(search), [search]).get('id')
+        const productID = useMemo(() => new URLSearchParams(search), [search]).get('id')
 
-        if (!param && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
+        if (!productID && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
             api.getCategoryProducts(setProductObject, category.name, setError)
         }
-        else if (param && !productObject.bucketedProductIDMap[param]) {
-            api.getSingleProduct(setProductObject, param, setError)
+        else if (productID && !productObject.bucketedProductIDMap[productID]) {
+            api.getSingleProduct(setProductObject, productID, setError)
         }
-        return param
+        return productID
     }
-    const productQuery = useQuery();
+    const productID = useProductID();
 
     return (
         <Container>
 
             <Typography gutterBottom variant="h5" component="div">
-                {!productQuery && category.name}
+                {!productID && category.name}
             </Typography>
 
             <Divider />
             <br></br>
 
             <Grid container spacing={3}>
-                {!productQuery &&
+                {!productID &&
                     productObject.bucketedProductKeys.map(product =>
                         <ProductTemplate key={product}
                             productName={product}
                             productData={productObject.bucketedProductMap[product]}
                             cartFunctions={cartFunctions} />)}
 
-                {(productQuery && productObject.bucketedProductIDMap[productQuery])  &&
-                    <ProductTemplate key={productObject.bucketedProductIDMap[productQuery]}
-                        productName={productObject.bucketedProductIDMap[productQuery]}
-                        productData={productObject.bucketedProductMap[productObject.bucketedProductIDMap[productQuery]]}
+                {(productID && productObject.bucketedProductIDMap[productID])  &&
+                    <ProductTemplate key={productObject.bucketedProductIDMap[productID]}
+                        productName={productObject.bucketedProductIDMap[productID]}
+                        productData={productObject.bucketedProductMap[productObject.bucketedProductIDMap[productID]]}
                         cartFunctions={cartFunctions} />}
 
             </Grid>
