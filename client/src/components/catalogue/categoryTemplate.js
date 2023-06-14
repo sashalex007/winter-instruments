@@ -21,7 +21,6 @@ export default function CategoryTemplate({ category, cartFunctions }) {
         const param = useMemo(() => new URLSearchParams(search), [search]).get('id')
 
         if (!param && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
-            if (productObject.flat) setProductObject({ bucketedProductKeys: [], bucketedProductMap: {}, bucketedProductIDMap: {} })
             api.getCategoryProducts(setProductObject, category.name, setError)
         }
         else if (param && !productObject.bucketedProductIDMap[param]) {
