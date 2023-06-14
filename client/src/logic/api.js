@@ -1,8 +1,13 @@
+import { testService } from './test/testService'
+
 const cache = {categoryProducts: {}, singleProducts: {}}
+const test = true
 
 export const api = {
 
     getCategoryList: async (setCategoryList, setError) => {
+        if (test) return setCategoryList(testService.getCategoryList())
+
         try {
             const data = await fetch('/get-category-list');
             const dataJson = await data.json();
@@ -16,6 +21,8 @@ export const api = {
     },
 
     getCategoryProducts: async (setProductObject, category, setError) => {
+        if (test) return setProductObject(testService.getCategoryProducts(category))
+
         if (cache.categoryProducts[category]) return setProductObject(cache.categoryProducts[category])
         try {
             const data = await fetch('/get-category-products', {
@@ -37,6 +44,8 @@ export const api = {
     },
 
     getSingleProduct: async (setProductObject, productID, setError) => {
+        if (test) return setProductObject(testService.getSingleProduct(productID))
+
         if (cache.singleProducts[productID]) return setProductObject(cache.singleProducts[productID])
         try {
             const data = await fetch('/get-single-product', {
@@ -58,6 +67,8 @@ export const api = {
     },
 
     getShippingRate: async (setShippingData, address, cartData, setError, setLoading, setSuccess) => {
+        if (test) api.getTestShippingRate(setShippingData, address, setLoading, setSuccess)
+
         const shippingRateObject = { address: address, items: cartData }
         try {
             const data = await fetch('/get-shipping-rate', {

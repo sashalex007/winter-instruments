@@ -13,7 +13,6 @@ import { api } from './logic/api';
 import CartService from './logic/cartService';
 import ScrollToTop from './logic/scrollToTop';
 //components
-import ProductsLoading from './components/alerts/productsLoading';
 import ErrorAlert from './components/alerts/errorAlert';
 import NavBar from './components/navbar';
 import Catalogue from './components/catalogue/catalogue';
@@ -71,8 +70,6 @@ export default function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
           
-              {/* <ProductsLoading open={categoryList.length === 0} /> */}
-
               <ErrorContext.Provider value={setError}>
                 <Router>
                   <ScrollToTop />

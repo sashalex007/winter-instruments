@@ -40,6 +40,11 @@ export const memoryService = {
         res.json(stripeData.flatProducts[productID]);
     },
 
+    getStripeData: (res) => {
+        if (!syncComplete) return memoryService.syncInProgress(res);
+        res.json(stripeData);
+    },
+
     syncInProgress: (res) => {
         res.json({ error: 'Server loading...refresh in a few seconds' });
     }

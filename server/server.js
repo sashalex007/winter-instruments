@@ -27,6 +27,10 @@ app.get("/get-category-list", (req, res) => {
   memoryService.getCategoryList(res);
 });
 
+app.get("/get-stripe-data", apiLimiter,(req, res) => {
+  memoryService.getStripeData(res);
+});
+
 //get category products
 app.post("/get-category-products", jsonParser,(req, res) => {
   memoryService.getCategoryProducts(res, req.body.category);
