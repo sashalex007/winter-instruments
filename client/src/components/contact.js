@@ -16,7 +16,7 @@ export default function ContactCard() {
                 Please join the discord server!
             </Typography>
             <br></br>
-            <iframe src="https://discord.com/widget?id=1118553098353385535&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            <iframe title='Discord' src="https://discord.com/widget?id=1118553098353385535&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </Container>
 
     );
