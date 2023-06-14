@@ -14,9 +14,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import image from '../img/logoText.png';
+import image from '../static/img/logoText.png';
 //logic
-import getNavItems from '../staticData/navItems';
+import getNavItems from '../static/navItems';
 //components
 import PopupCart from './cart/popupCart/popupCart';
 

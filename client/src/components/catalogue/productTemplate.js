@@ -29,6 +29,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
     const [imageLoading, setImageLoading] = useState(true)
     const location = useLocation()
 
+    
     useEffect(() => {
         let param = new URLSearchParams(location.search)
         const ID = param.get('id')

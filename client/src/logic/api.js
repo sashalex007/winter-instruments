@@ -35,7 +35,11 @@ export const api = {
         }
     },
 
+    currentProduct: null, //used to prevent duplicate fetches- dirty hack
+
     getSingleProduct: async (setProductObject, productID, setError) => {
+        if (api.currentProduct === productID) return
+
         try {
             const data = await fetch('/get-single-product', {
                 method: 'POST',
@@ -46,6 +50,7 @@ export const api = {
             });
             const dataJson = await data.json();
             if (dataJson.error) throw new Error(dataJson.error);
+            api.currentProduct = productID
             setProductObject(dataJson);
         }
         catch (err) {

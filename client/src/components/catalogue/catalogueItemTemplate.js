@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
 //logic
-import { imageMap } from '../../img/imageMap';
+import { imageMap } from '../../static/img/imageMap';
 
 export default function CatalogueItemTemplate({category}) {
     let image = null

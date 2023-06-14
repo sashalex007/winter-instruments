@@ -26,6 +26,8 @@ export const stripeService = {
     },
 
     verifyProducts: async (items) => {
+        if (items.length === 0) throw new Error('Cart validation failed (no items found)')
+        if (items.length > 100) throw new Error('Cart validation failed (too many items)')
         const productIdList = items.map(item => item.id);
         try {
             const products = await stripe.products.list({

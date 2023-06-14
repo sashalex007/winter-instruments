@@ -19,24 +19,20 @@ export default function CategoryTemplate({ category, cartFunctions }) {
     function useQuery() {
         const { search } = useLocation();
         const param = useMemo(() => new URLSearchParams(search), [search]).get('id')
+
+        if (!param && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
+            if (productObject.flat) setProductObject({ bucketedProductKeys: [], bucketedProductMap: {}, bucketedProductIDMap: {} })
+            api.getCategoryProducts(setProductObject, category.name, setError)
+        }
+        else if (param && !productObject.bucketedProductIDMap[param]) {
+            api.getSingleProduct(setProductObject, param, setError)
+        }
         return param
     }
     const productQuery = useQuery();
 
-    useEffect(() => {
-        if (!productQuery && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
-            if (productObject.flat) setProductObject({ bucketedProductKeys: [], bucketedProductMap: {}, bucketedProductIDMap: {} })
-            api.getCategoryProducts(setProductObject, category.name, setError)
-        }
-        else if (productQuery && productObject.bucketedProductKeys.length === 0) {
-            api.getSingleProduct(setProductObject, productQuery, setError)
-        }
-    }, [productQuery, category.name, setError]);
-
-
     return (
         <Container>
-            {/* <ProductsLoading open={productObject.bucketedProductKeys.length === 0}/> */}
 
             <Typography gutterBottom variant="h5" component="div">
                 {!productQuery && category.name}
@@ -53,7 +49,7 @@ export default function CategoryTemplate({ category, cartFunctions }) {
                             productData={productObject.bucketedProductMap[product]}
                             cartFunctions={cartFunctions} />)}
 
-                {(productQuery && productObject.bucketedProductKeys.length > 0 ) && 
+                {(productQuery && productObject.bucketedProductIDMap[productQuery])  &&
                     <ProductTemplate key={productObject.bucketedProductIDMap[productQuery]}
                         productName={productObject.bucketedProductIDMap[productQuery]}
                         productData={productObject.bucketedProductMap[productObject.bucketedProductIDMap[productQuery]]}
