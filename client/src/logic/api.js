@@ -1,5 +1,5 @@
 import { testService } from './test/testService'
-const test = true
+const test = false
 
 const cache = { categoryProducts: {}, singleProducts: {} }
 
