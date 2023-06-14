@@ -62,6 +62,13 @@ export const memUtilities = {
                     flatProductList[flatProductMap[bucket]].bucketedProductIDMap[product.id] = bucket
                 }
             })
+
+            for (let product in bucketedProductMap) {
+                bucketedProductMap[product].sort((a, b) => {
+                    return b.variant - a.variant
+                })
+            }
+            
             bucketedProductCategoryMap[category.name] = { bucketedProductKeys, bucketedProductMap, bucketedProductIDMap }
         })
 
