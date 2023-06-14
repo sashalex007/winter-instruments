@@ -18,14 +18,14 @@ export default function MainCartItem({ item, cartFunctions }) {
         <ListItem divider={true} style={{ cursor: 'default' }}>
 
             <Stack direction="row" spacing={0}>
-                <Minus onClick={() => {
+                <Minus style={{ cursor: 'pointer' }} onClick={() => {
                     cartFunctions.editQty(item.price, item.quantity - 1);
                     if (item.quantity === 0) cartFunctions.deleteCartItem(item.price);
                 }} />
                 <span>&nbsp;&nbsp;</span>
                 {item.quantity}
                 <span>&nbsp;&nbsp;</span>
-                <Plus onClick={() => {
+                <Plus style={{ cursor: 'pointer' }} onClick={() => {
                     cartFunctions.editQty(item.price, item.quantity + 1);
                 }} />
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>

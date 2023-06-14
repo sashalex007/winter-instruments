@@ -1,4 +1,4 @@
-import {stripeData} from './testData.js'
+import { stripeData } from './testData.js'
 
 export const testService = {
     getCategoryList: () => {
@@ -11,5 +11,22 @@ export const testService = {
 
     getSingleProduct: (productID) => {
         return stripeData.flatProducts[productID]
+    },
+
+    getTestShippingRate: (setShippingData, address, setLoading, setSuccess) => {
+        const shippingData = {
+            shipping: {
+                name: 'Shipping',
+                price: 'shipping',
+                info: 'test',
+                unit_amount: 1445,
+                quantity: 1,
+                address: address
+            },
+            isShipping: true
+        }
+        setShippingData(shippingData);
+        setLoading(false);
+        setSuccess(true);
     },
 }

@@ -1,7 +1,7 @@
 import { testService } from './test/testService'
+const test = false
 
-const cache = {categoryProducts: {}, singleProducts: {}}
-const test = true
+const cache = { categoryProducts: {}, singleProducts: {} }
 
 export const api = {
 
@@ -15,8 +15,7 @@ export const api = {
             setCategoryList(dataJson);
         }
         catch (err) {
-            console.log(err.message)
-            setError({ open: true, message: err.message });
+            api.handleError(err, setError);
         }
     },
 
@@ -38,8 +37,7 @@ export const api = {
             setProductObject(dataJson);
         }
         catch (err) {
-            console.log(err.message)
-            setError({ open: true, message: err.message });
+            api.handleError(err, setError);
         }
     },
 
@@ -61,13 +59,12 @@ export const api = {
             setProductObject(dataJson);
         }
         catch (err) {
-            console.log(err.message)
-            setError({ open: true, message: err.message });
+            api.handleError(err, setError);
         }
     },
 
     getShippingRate: async (setShippingData, address, cartData, setError, setLoading, setSuccess) => {
-        if (test) api.getTestShippingRate(setShippingData, address, setLoading, setSuccess)
+        if (test) testService.getTestShippingRate(setShippingData, address, setLoading, setSuccess)
 
         const shippingRateObject = { address: address, items: cartData }
         try {
@@ -85,28 +82,16 @@ export const api = {
             setSuccess(true);
         }
         catch (err) {
-            console.log(err.message)
             setLoading(false);
-            setError({ open: true, message: err.message });
+            api.handleError(err, setError);
         }
     },
 
-    getTestShippingRate: async (setShippingData, address, setLoading, setSuccess) => {
-        const shippingData = {
-            shipping: {
-                name: 'Shipping',
-                price: 'shipping',
-                info: 'test',
-                unit_amount: 1445,
-                quantity: 1,
-                address: address
-            },
-            isShipping: true
-        }
-        setShippingData(shippingData);
-        setLoading(false);
-        setSuccess(true);
-    },
+    handleError: (err, setError) => {
+        console.log(err.message)
+        setError({ open: true, message: err.message });
+    }
+
 }
 
 

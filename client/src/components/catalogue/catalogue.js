@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 //ui
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -15,6 +16,11 @@ export default function Catalogue({productCategoryList}) {
                 Catalogue
             </Typography>
             <Divider />
+            <Typography gutterBottom variant="body2" color="text.secondary" component="div">
+                All parts are fully or partially 3D printed from carbon-fiber reinforced polycarbonate or high density PETG, colour may vary. &nbsp;
+                <Typography variant="body2" color="text.secondary" component={Link} to={'/contact'}>Contact me for custom part requests!</Typography>
+ 
+            </Typography>
             <br></br>
             <Grid container spacing={3}>
                 {productCategoryList.map(category => <CatalogueItemTemplate key={category.link} category={category}/>)}

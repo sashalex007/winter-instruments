@@ -6,7 +6,7 @@ let syncComplete = false;
 
 export const memoryService = {
 
-    syncWithStripe: async () => {
+    syncWithStripe: async (res = null) => {
         syncComplete = false;
         try {
             console.log('Syncing with Stripe...');
@@ -18,10 +18,12 @@ export const memoryService = {
             stripeData.categoryData = { list: productObject.productCategoryList }
             syncComplete = true;
             console.log('Sync complete');
+            if (res) res.json({ success: 'Sync complete' });  
         }
         catch (err) {
             err.message = err.message + ' -syncWithStripe'
             console.log(err);
+            if (res) res.json({ error: err.message });
         }
     },
 

@@ -20,34 +20,26 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AddedAlert from '../alerts/addedAlert';
 
 
-export default function ProductTemplate({ productName, productData, cartFunctions }) {
+export default function ProductTemplate({isSingleProduct, productName, productData, cartFunctions }) {
     const products = productData
     products.sort((a, b) => b.variant-a.variant)
     const [product, setProduct] = useState(products[0])
-    const [isProductPage, setIsProductPage] = useState(false)
+    const [isProductPage] = useState(isSingleProduct)
     const [openImage, setOpenImage] = useState(false)
     const [imageLoading, setImageLoading] = useState(true)
     const location = useLocation()
 
-    
-    useEffect(() => {
-        let param = new URLSearchParams(location.search)
-        const ID = param.get('id')
-        products.forEach(product => {
-            if (ID === product.id) setIsProductPage(true)
-        })
-    }, [location, products])
 
     return (
         <Grid item xs>
             <Card elevation={5} sx={{ maxWidth: 600, minWidth: 300, height: '100%' }}>
 
-                <Box
+                {/* <Box
                     style={{ display: imageLoading ? "block" : "none" }}
                     sx={{ height: isProductPage ? 300 : 170 }}>
                     <CircularProgress
                         sx={{ position: 'relative', top: '50%', left: '45%', transform: 'translate(-50%, -50%)' }} />
-                </Box>
+                </Box> */}
 
                 <ProductActionArea />
                 <CardActions>
@@ -64,7 +56,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
             <div>
                 <CardActionArea onClick={() => setOpenImage(true)} >
                     <CardMedia
-                        style={{ display: imageLoading ? "none" : "block" }}
+                        //style={{ display: imageLoading ? "none" : "block" }}
                         component="img"
                         height="300"
                         image={product.images[0]}
@@ -80,7 +72,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
         return (
             <CardActionArea component={Link} to={location.pathname + '?id=' + product.id} >
                 <CardMedia
-                    style={{ display: imageLoading ? "none" : "block" }}
+                    //style={{ display: imageLoading ? "none" : "block" }}
                     component="img"
                     height="170"
                     image={product.images[0]}
@@ -94,6 +86,7 @@ export default function ProductTemplate({ productName, productData, cartFunction
 
     function ProductContent() {
         let description = product.metadata.description || product.description
+        description += ' (Fully or partially 3D printed from carbon-fiber reinforced polycarbonate or high density PETG, colour may vary.)'
         if (description.length > 50 && !isProductPage) description = description.substring(0, 50) + '...'
         return (
             <CardContent>

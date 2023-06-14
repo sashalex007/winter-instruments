@@ -19,16 +19,23 @@ memoryService.syncWithStripe();
 app.listen(port, () => {
   console.log(`Winter Instruments launched on ${port}`);
 });
+
 //serve static assets 
 app.use(express.static(resolve(__dirname, '../client/build')));
+
+//sync with stripe
+app.get("/sync", apiLimiter, (req, res) => {
+  memoryService.syncWithStripe(res);
+});
+
+//get test data
+app.get("/get-stripe-data", apiLimiter,(req, res) => {
+  memoryService.getStripeData(res);
+});
 
 //get category list
 app.get("/get-category-list", (req, res) => {
   memoryService.getCategoryList(res);
-});
-
-app.get("/get-stripe-data", apiLimiter,(req, res) => {
-  memoryService.getStripeData(res);
 });
 
 //get category products

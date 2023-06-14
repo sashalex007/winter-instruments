@@ -96,8 +96,8 @@ export default function CartService() {
         clearShippingData: () => {
             setShippingData({shipping: {}, isShipping: false})
         }
-
     } 
+    
     return { cartData, shippingData, cartFunctions }
 }
 

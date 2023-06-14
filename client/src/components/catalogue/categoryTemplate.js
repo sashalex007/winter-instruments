@@ -32,23 +32,28 @@ export default function CategoryTemplate({ category, cartFunctions }) {
     return (
         <Container>
 
-            <Typography gutterBottom variant="h5" component="div">
-                {!productID && category.name}
-            </Typography>
-
-            <Divider />
+            {!productID &&
+                <div>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {category.name}
+                    </Typography>
+                    <Divider />
+                </div>
+            }
             <br></br>
 
             <Grid container spacing={3}>
                 {!productID &&
                     productObject.bucketedProductKeys.map(product =>
                         <ProductTemplate key={product}
+                            isSingleProduct={false}
                             productName={product}
                             productData={productObject.bucketedProductMap[product]}
                             cartFunctions={cartFunctions} />)}
 
-                {(productID && productObject.bucketedProductIDMap[productID])  &&
+                {(productID && productObject.bucketedProductIDMap[productID]) &&
                     <ProductTemplate key={productObject.bucketedProductIDMap[productID]}
+                        isSingleProduct={true}
                         productName={productObject.bucketedProductIDMap[productID]}
                         productData={productObject.bucketedProductMap[productObject.bucketedProductIDMap[productID]]}
                         cartFunctions={cartFunctions} />}
