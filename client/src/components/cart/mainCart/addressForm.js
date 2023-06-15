@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Collapse from '@mui/material/Collapse';
 import Snackbar from '@mui/material/Snackbar';
-import { Alert } from '@mui/material';
+import { Alert, Container, Typography } from '@mui/material';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 
@@ -55,11 +55,13 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
 
   if (cartSize > 0) {
     return (
-      <div>
+      <Box sx={{ m: 1 }}>
         <Collapse in={!isShipping}>
+          <Typography gutterBottom variant="h7" component="div">
+          </Typography>
+
           <Elements stripe={stripe} options={options}>
             <form>
-              <h3>Shipping</h3>
               <AddressElement options={{
                 mode: 'shipping',
                 allowedCountries: ['US', 'CA', 'GB', 'FR', 'DE', 'AU', 'JP', 'NZ', 'SG'],
@@ -80,7 +82,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
           </Elements>
           <br></br>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ m: 1, position: 'relative' }}>
+            <Box sx={{ m: 0, position: 'relative' }}>
               <Button
                 startIcon={<LocalShippingIcon />}
                 variant="contained"
@@ -111,7 +113,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
             Shipping added
           </Alert>
         </Snackbar>
-      </div>
+      </Box>
     );
   }
 };

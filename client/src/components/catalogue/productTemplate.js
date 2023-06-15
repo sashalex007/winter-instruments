@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 //ui
 import Card from '@mui/material/Card';
@@ -23,25 +23,39 @@ import AddedAlert from '../alerts/addedAlert';
 
 export default function ProductTemplate({ isSingleProduct, productName, productData, cartFunctions }) {
     const products = productData
+    const [isFirstLoad, setIsFirstLoad] = useState(true)
     const [product, setProduct] = useState(products[0])
     const [isProductPage] = useState(isSingleProduct)
     const [openImage, setOpenImage] = useState(false)
     const [imageLoading, setImageLoading] = useState(true)
     const location = useLocation()
 
+    useEffect(() => {
+        setIsFirstLoad(true)
+    }, [])
+
     return (
         <Grid item xs>
             <Card elevation={5} sx={{ maxWidth: 600, minWidth: 300, height: '100%' }}>
 
-                {imageLoading &&
+                {(imageLoading && isFirstLoad) &&
                     <Skeleton
                         animation="wave"
                         variant="rectangular"
                         height={isProductPage ? 300 : 170} />
                 }
 
+                {(imageLoading && !isFirstLoad) &&
+                    <CardMedia
+                        component="img"
+                        height={isProductPage ? 300 : 170}
+                        image={products[0].images[0]}
+                        alt={productName}>
+                    </CardMedia>
+                }
+
                 <ProductActionArea />
-                
+
                 <CardActions>
                     {CreateVariantSelector(products)}
                     &nbsp;&nbsp;
@@ -59,8 +73,11 @@ export default function ProductTemplate({ isSingleProduct, productName, productD
                         style={{ display: imageLoading ? "none" : "block" }}
                         component="img"
                         height="300"
-                        image={product.images[0]}
-                        onLoad={() => { setImageLoading(false) }}
+                        image={products[0].images[0]}
+                        onLoad={() => {
+                            setImageLoading(false)
+                            if (isFirstLoad) setIsFirstLoad(false)
+                        }}
                         alt={productName}>
                     </CardMedia>
                 </CardActionArea>
@@ -75,8 +92,11 @@ export default function ProductTemplate({ isSingleProduct, productName, productD
                     style={{ display: imageLoading ? "none" : "block" }}
                     component="img"
                     height="170"
-                    image={product.images[0]}
-                    onLoad={() => { setImageLoading(false) }}
+                    image={products[0].images[0]}
+                    onLoad={() => {
+                        setImageLoading(false)
+                        if (isFirstLoad) setIsFirstLoad(false)
+                    }}
                     alt={productName}>
                 </CardMedia>
                 <ProductContent />
@@ -93,7 +113,7 @@ export default function ProductTemplate({ isSingleProduct, productName, productD
         return (
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    <Title/>
+                    <Title />
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {description}
@@ -146,6 +166,7 @@ export default function ProductTemplate({ isSingleProduct, productName, productD
         const handleClickOpen = () => {
             setOpen(true);
         };
+        product.images = products[0].images
         return (
             <Stack>
                 <Button size='large' startIcon={<AddShoppingCartIcon />} onClick={() => {

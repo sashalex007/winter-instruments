@@ -8,6 +8,7 @@ import { Skeleton } from '@mui/material';
 
 export default function ContactCard() {
     const [widgetLoading, setWidgetLoadeding] = React.useState(true);
+    const widgetHeight = 250
 
     return (
 
@@ -21,7 +22,7 @@ export default function ContactCard() {
             <br></br>
 
             {widgetLoading &&
-                <Skeleton animation="wave" variant="rounded" width={350} height={500} />
+                <Skeleton animation="wave" variant="rounded" width={350} height={widgetHeight} />
             }
 
             <Box sx={{ display: widgetLoading ? 'none' : 'block' }}>
@@ -30,7 +31,7 @@ export default function ContactCard() {
                     src="https://discord.com/widget?id=1118553098353385535&theme=dark"
                     onLoad={() => setWidgetLoadeding(false)}
                     width="350"
-                    height="500"
+                    height={widgetHeight}
                     allowtransparency="true"
                     frameBorder="0"
                     sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
