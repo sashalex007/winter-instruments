@@ -33,13 +33,15 @@ export default function ProductTemplate({ isSingleProduct, productName, productD
         <Grid item xs>
             <Card elevation={5} sx={{ maxWidth: 600, minWidth: 300, height: '100%' }}>
 
-                <Box
-                    style={{ display: imageLoading ? "block" : "none" }}
-                    sx={{ height: isProductPage ? 300 : 170 }}>
-                    <Skeleton variant="rectangular" height={isProductPage ? 300 : 170} />
-                </Box>
+                {imageLoading &&
+                    <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        height={isProductPage ? 300 : 170} />
+                }
 
                 <ProductActionArea />
+                
                 <CardActions>
                     {CreateVariantSelector(products)}
                     &nbsp;&nbsp;
@@ -91,13 +93,21 @@ export default function ProductTemplate({ isSingleProduct, productName, productD
         return (
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {productName} - {(product.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                    <Title/>
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {description}
                 </Typography>
             </CardContent>
         );
+
+        function Title() {
+            return (
+                <div>
+                    {productName} - {(product.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                </div>
+            )
+        }
     }
 
     function CreateVariantSelector(products) {
