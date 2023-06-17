@@ -9,11 +9,10 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
-
 //logic
 import { imageMap } from '../../static/img/imageMap';
 
-export default function CatalogueItemTemplate({ category }) {
+export default function CatalogueItem({ category }) {
     const [imageLoading, setImageLoading] = useState(true)
     const image = imageMap[category.link]
 

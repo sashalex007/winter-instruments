@@ -19,7 +19,7 @@ import Catalogue from './components/catalogue/catalogue';
 import Contact from './components/contact';
 import MainCart from './components/cart/mainCart/mainCart';
 import PaymentSuccess from './components/cart/paymentSuccess';
-import CategoryTemplate from './components/catalogue/categoryTemplate';
+import Category from './components/catalogue/category';
 
 export const ErrorContext = React.createContext();
 
@@ -35,7 +35,7 @@ export default function App() {
   function createCategoryRoute(category, cartFunctions) {
     return (
       <Route exact path={category.link} key={category.link} element={
-        < CategoryTemplate category={category} cartFunctions={cartFunctions} />
+        < Category category={category} cartFunctions={cartFunctions} />
       }></Route>
     );
   }

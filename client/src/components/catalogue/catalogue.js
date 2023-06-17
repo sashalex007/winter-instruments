@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import { Container } from '@mui/system';
 import Divider from '@mui/material/Divider';
 //components
-import CatalogueItemTemplate from './catalogueItemTemplate';
+import CatalogueItem from './catalogueItem';
 
 
 export default function Catalogue({productCategoryList}) {
@@ -23,7 +23,7 @@ export default function Catalogue({productCategoryList}) {
             </Typography>
             <br></br>
             <Grid container spacing={3}>
-                {productCategoryList.map(category => <CatalogueItemTemplate key={category.link} category={category}/>)}
+                {productCategoryList.map(category => <CatalogueItem key={category.link} category={category}/>)}
             </Grid>
             <br></br>
         </Container>

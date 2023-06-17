@@ -6,12 +6,12 @@ import Grid from '@mui/material/Grid';
 import { Container } from '@mui/system';
 import Divider from '@mui/material/Divider';
 //components
-import ProductTemplate from './productTemplate';
+import Product from './product';
 //logic
 import { api } from '../../logic/api';
 import { ErrorContext } from '../../App';
 
-export default function CategoryTemplate({ category, cartFunctions }) {
+export default function Category({ category, cartFunctions }) {
     const [productObject, setProductObject] = useState({ bucketedProductKeys: [], bucketedProductMap: {}, bucketedProductIDMap: {} });
     const setError = useContext(ErrorContext);
 
@@ -45,14 +45,14 @@ export default function CategoryTemplate({ category, cartFunctions }) {
             <Grid container spacing={3}>
                 {!productID &&
                     productObject.bucketedProductKeys.map(product =>
-                        <ProductTemplate key={product}
+                        <Product key={product}
                             isSingleProduct={false}
                             productName={product}
                             productData={productObject.bucketedProductMap[product]}
                             cartFunctions={cartFunctions} />)}
 
                 {(productID && productObject.bucketedProductIDMap[productID]) &&
-                    <ProductTemplate key={productObject.bucketedProductIDMap[productID]}
+                    <Product key={productObject.bucketedProductIDMap[productID]}
                         isSingleProduct={true}
                         productName={productObject.bucketedProductIDMap[productID]}
                         productData={productObject.bucketedProductMap[productObject.bucketedProductIDMap[productID]]}

@@ -16,12 +16,11 @@ import FormControl from '@mui/material/FormControl';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-
 //components
 import AddedAlert from '../alerts/addedAlert';
 
 
-export default function ProductTemplate({ isSingleProduct, productName, productData, cartFunctions }) {
+export default function Product({ isSingleProduct, productName, productData, cartFunctions }) {
     const products = productData
     const [isFirstLoad, setIsFirstLoad] = useState(true)
     const [product, setProduct] = useState(products[0])
@@ -108,24 +107,29 @@ export default function ProductTemplate({ isSingleProduct, productName, productD
         let description = product.metadata.description
         if (description === 'none' || !description) description = product.description
 
-        description += ' (Fully or partially 3D printed from carbon-fiber reinforced polycarbonate or high density PETG, colour may vary.)'
+        description += ` (Fully or partially 3D printed from carbon-fiber reinforced polycarbonate or high density PETG, colour may vary.)`
         if (description.length > 50 && !isProductPage) description = description.substring(0, 50) + '...'
         return (
             <CardContent>
+                <Stack direction="row" spacing={1}>
+
                 <Typography gutterBottom variant="h5" component="div">
-                    <Title />
+                    {productName} -
                 </Typography>
+                <Price />
+                </Stack>
+
                 <Typography variant="body2" color="text.secondary">
                     {description}
                 </Typography>
             </CardContent>
         );
 
-        function Title() {
+        function Price() {
             return (
-                <div>
-                    {productName} - {(product.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
-                </div>
+                <Typography  variant="h6">
+                   {(product.unit_amount / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                </Typography>
             )
         }
     }

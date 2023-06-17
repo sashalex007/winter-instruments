@@ -20,19 +20,6 @@ const stripe = loadStripe('pk_test_51N8o0fC48L00qx1Q0j0al75mo9VWVfYJxC2R7XFveKIL
 
 export default function AddressForm({ shippingData, cartData, cartFunctions }) {
 
-  // const testAddress = {
-  //   name: 'Jane Doe',
-  //   address: {
-  //     line1: '354 Oyster Point Blvd',
-  //     line2: '',
-  //     city: 'South San Francisco',
-  //     state: 'CA',
-  //     postal_code: '94080',
-  //     country: 'US',
-  //     name: 'Jane Doe',
-  //   }
-  // }
-
   const [address, setAddress] = useState({})
   const [addressComplete, setAddressComplete] = useState(false)
   const [loading, setLoading] = useState(false);
@@ -45,6 +32,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
   };
 
   const setError = useContext(ErrorContext);
+
   function getShippingRate() {
     setLoading(true);
     api.getShippingRate(cartFunctions.setShippingData, address, cartData, setError, setLoading, setSuccess)
@@ -56,11 +44,11 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
   if (cartSize > 0) {
     return (
       <Box sx={{ m: 1 }}>
-        <Collapse in={!isShipping}>
+        <Collapse in={ !isShipping }>
           <Typography gutterBottom variant="h7" component="div">
           </Typography>
 
-          <Elements stripe={stripe} options={options}>
+          <Elements stripe={ stripe } options={ options }>
             <form>
               <AddressElement options={{
                 mode: 'shipping',
@@ -87,11 +75,12 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
                 startIcon={<LocalShippingIcon />}
                 variant="contained"
                 size="large"
-                disabled={loading || !addressComplete}
+                disabled={ loading || !addressComplete }
                 onClick={getShippingRate}
               >
                 Get shipping rate
               </Button>
+
               {loading && (
                 <CircularProgress
                   size={24}
