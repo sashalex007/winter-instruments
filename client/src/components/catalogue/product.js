@@ -104,17 +104,16 @@ export default function Product({ isSingleProduct, productName, productData, car
     }
 
     function ProductContent() {
+        const message = `Fully or partially 3D printed from carbon-fiber reinforced polycarbonate or high density PETG, colour may vary.`
         let description = product.metadata.description
         if (description === 'none' || !description) description = product.description
-
-        description += ` (Fully or partially 3D printed from carbon-fiber reinforced polycarbonate or high density PETG, colour may vary.)`
-        if (description.length > 50 && !isProductPage) description = description.substring(0, 50) + '...'
+        if (description.length + message.length > 50 && !isProductPage) description = description.substring(0, 50) + '...'
         return (
             <CardContent>
                 <Stack direction="row" spacing={1}>
 
                 <Typography gutterBottom variant="h5" component="div">
-                    {productName} -
+                    {productName}
                 </Typography>
                 <Price />
                 </Stack>
@@ -122,6 +121,11 @@ export default function Product({ isSingleProduct, productName, productData, car
                 <Typography variant="body2" color="text.secondary">
                     {description}
                 </Typography>
+                
+                {isProductPage && <Typography variant="body2" color="text.secondary">
+                    <br></br>
+                    {message}
+                    </Typography>}
             </CardContent>
         );
 

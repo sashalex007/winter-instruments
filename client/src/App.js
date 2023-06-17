@@ -69,10 +69,9 @@ export default function App() {
         <Box sx={isXs ? styleXs : styleSm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-          
               <ErrorContext.Provider value={setError}>
                 <Router>
-                  <ScrollToTop />
+                  <ScrollToTop/>
                   <NavBar cartObject={cartService}></NavBar>
                   <BackButton />
                   <Routes>
