@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 //ui
 import { Box } from '@mui/system';
 import Grid from '@mui/material/Grid';
@@ -11,7 +11,6 @@ import Button from '@mui/material/Button';
 //logic
 import { api } from './logic/api';
 import CartService from './logic/cartService';
-import ScrollToTop from './logic/scrollToTop';
 //components
 import ErrorAlert from './components/alerts/errorAlert';
 import NavBar from './components/navbar';
@@ -42,6 +41,7 @@ export default function App() {
 
   function BackButton() {
     const navigate = useNavigate();
+    navigate.scrollRestoration = 'manual';
     const location = useLocation()
     function goBack() {
       navigate(-1, { replace: true });
@@ -70,8 +70,6 @@ export default function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <ErrorContext.Provider value={setError}>
-                <Router>
-                  <ScrollToTop/>
                   <NavBar cartObject={cartService}></NavBar>
                   <BackButton />
                   <Routes>
@@ -81,7 +79,6 @@ export default function App() {
                     <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartService.cartFunctions} />}></Route>
                     {categoryList.map(category => createCategoryRoute(category, cartService.cartFunctions))}
                   </Routes>
-                </Router>
               </ErrorContext.Provider>
 
               <ErrorAlert error={error} setError={setError}></ErrorAlert>
