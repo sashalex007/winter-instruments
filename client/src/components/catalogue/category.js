@@ -31,7 +31,6 @@ export default function Category({ category, cartFunctions }) {
 
     return (
         <Container>
-
             {!productID &&
                 <div>
                     <Typography gutterBottom variant="h5" component="div">

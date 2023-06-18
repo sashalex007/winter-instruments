@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Collapse from '@mui/material/Collapse';
 import Snackbar from '@mui/material/Snackbar';
-import { Alert, Container, Typography } from '@mui/material';
+import { Alert, Typography } from '@mui/material';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 
@@ -28,7 +28,13 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
   const cartSize = cartFunctions.getCartSize()
 
   const options = {
-    appearance: {/*...*/ },
+    appearance: {
+      theme: 'flat',
+      variables: {
+        colorPrimary: '#006064',
+        borderRadius: '5px',
+      },
+    },
   };
 
   const setError = useContext(ErrorContext);
@@ -44,13 +50,17 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
   if (cartSize > 0) {
     return (
       <Box sx={{ m: 1 }}>
-        <Collapse in={ !isShipping }>
+        <Collapse in={!isShipping}>
           <Typography gutterBottom variant="h7" component="div">
           </Typography>
 
-          <Elements stripe={ stripe } options={ options }>
+          <Elements stripe={stripe} options={options}>
             <form>
               <AddressElement options={{
+                autocomplete: {
+                  mode: 'google_maps_api',
+                  apiKey: 'AIzaSyCnuvrzgbkXeLPqHhsYYx2ymGZAxvUxeHY',
+                },
                 mode: 'shipping',
                 allowedCountries: ['US', 'CA', 'GB', 'FR', 'DE', 'AU', 'JP', 'NZ', 'SG'],
                 blockPoBox: true,
@@ -75,7 +85,7 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
                 startIcon={<LocalShippingIcon />}
                 variant="contained"
                 size="large"
-                disabled={ loading || !addressComplete }
+                disabled={loading || !addressComplete}
                 onClick={getShippingRate}
               >
                 Get shipping rate
