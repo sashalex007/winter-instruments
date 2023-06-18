@@ -41,7 +41,6 @@ export default function App() {
 
   function BackButton() {
     const navigate = useNavigate();
-    navigate.scrollRestoration = 'manual';
     const location = useLocation()
     function goBack() {
       navigate(-1, { replace: true });
