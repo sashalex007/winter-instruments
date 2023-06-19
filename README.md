@@ -2,6 +2,6 @@
 
 ![Screenshot](home.png)
 
-### https://winterinsruments.shop
+### https://winterinstruments.shop
 
 Server and client repo for my react+nodejs ski component engineering store. 
