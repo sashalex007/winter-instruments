@@ -1,6 +1,6 @@
 # Winter instruments engineering company
 
-![Screenshot](screenshot.png)
+![Screenshot](home.png)
 
 ### https://winterinsruments.shop
 
