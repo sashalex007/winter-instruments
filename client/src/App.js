@@ -8,6 +8,7 @@ import { useMediaQuery } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 //logic
 import { api } from './logic/api';
 import CartService from './logic/cartService';
@@ -69,18 +70,30 @@ export default function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <ErrorContext.Provider value={setError}>
-                  <NavBar cartObject={cartService}></NavBar>
-                  <BackButton />
-                  <Routes>
-                    <Route exact path='/' element={< Catalogue productCategoryList={categoryList} />}></Route>
-                    <Route exact path='/contact' element={< Contact />}></Route>
-                    <Route exact path='/cart' element={< MainCart cartObject={cartService} />}></Route>
-                    <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartService.cartFunctions} />}></Route>
-                    {categoryList.map(category => createCategoryRoute(category, cartService.cartFunctions))}
-                  </Routes>
+                <NavBar cartObject={cartService}></NavBar>
+                <BackButton />
+                <Routes>
+                  <Route exact path='/' element={< Catalogue productCategoryList={categoryList} />}></Route>
+                  <Route exact path='/contact' element={< Contact />}></Route>
+                  <Route exact path='/cart' element={< MainCart cartObject={cartService} />}></Route>
+                  <Route exact path='/payment-success' element={< PaymentSuccess cartFunctions={cartService.cartFunctions} />}></Route>
+                  {categoryList.map(category => createCategoryRoute(category, cartService.cartFunctions))}
+                </Routes>
               </ErrorContext.Provider>
 
               <ErrorAlert error={error} setError={setError}></ErrorAlert>
+
+              <br />
+              <br />
+              <br />
+              <br />
+
+              <Box sx={{ width: '100%' }}>
+                <Typography variant='body2' color='text.secondary' textAlign= 'center'>
+                  © 2023 - winterinstruments.shop - All Rights Reserved.
+                </Typography>
+              </Box>
+
 
             </Grid>
           </Grid>
