@@ -1,28 +1,28 @@
 import { stripeService } from '../../services//externalServices/stripeService.js';
 
-createOneProdcut()
+//createOneProdcut()
 function createOneProdcut() {
-    const name = 'DIN lug plates'
-    const description1 = '2x heel piece, 2x toe peice. 3mm thickness, screw included.'
-    const description2 = '2x heel piece, 2x toe peice. 3mm thickness, screw included. Some extra fitting may be required.'
+    const name = 'Dalbello cuff cam'
+    const description1 = '4x peices, Replacement cuff cam for Dalbello boots.'
+    const description2 = '4x peices, Replacement cuff cam for Dalbello boots. Extends range over stock cams by 3mm'
     const unit_amount = 1500
     const weight_oz = 3.5
-    const category = 'Under-sole canting'
+    const category = 'Cuff canting' //full name not link
     createSingleProduct({name, description1, description2, unit_amount, weight_oz, category})
 }
 
 //createMultipleVariantProducts()
 async function createMultipleVariantProducts() {
-    const variantData = ['Right handed', 'Left handed']
+    const variantData = ['0.5mm', '1mm', '2mm']
 
     for (let data of variantData) {
-        const name = `WC sidewall cutter (${data})`
-        const description1 = 'Sidewall cutter with innovative dovetail design. Square blade included.'
+        const name = `R22 heel lifter (${data})`
+        const description1 = '2x peices. Heel lifters for R22 style bindings.'
         const description2 = 'none'
-        const unit_amount = 6500
+        const unit_amount = 1000
         const weight_oz = 4.5
-        const category = 'Tools'
-        const name_variant = `WC sidewall cutter_Orientation_${data}`
+        const category = 'Binding specific'
+        const name_variant = `R22 heel lifter_Thickness_${data}`
         await createVariantProduct({name, description1, description2, unit_amount, weight_oz, name_variant, category})
     }
 }

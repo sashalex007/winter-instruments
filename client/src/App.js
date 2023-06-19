@@ -69,6 +69,7 @@ export default function App() {
         <Box sx={isXs ? styleXs : styleSm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
+              
               <ErrorContext.Provider value={setError}>
                 <NavBar cartObject={cartService}></NavBar>
                 <BackButton />
