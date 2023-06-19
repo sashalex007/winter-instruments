@@ -1,7 +1,7 @@
-# Winter instruments online store
+# Winter instruments engineering company
 
 ![Screenshot](screenshot.png)
 
-### Demo: https://winterinsruments.shop
+### https://winterinsruments.shop
 
-TODO: description
+Server and client repo for my react+nodejs ski component engineering store. 
