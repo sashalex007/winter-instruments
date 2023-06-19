@@ -62,7 +62,6 @@ export default function AddressForm({ shippingData, cartData, cartFunctions }) {
                   apiKey: 'AIzaSyCnuvrzgbkXeLPqHhsYYx2ymGZAxvUxeHY',
                 },
                 mode: 'shipping',
-                allowedCountries: ['US', 'CA', 'GB', 'FR', 'DE', 'AU', 'JP', 'NZ', 'SG'],
                 blockPoBox: true,
                 fields: {
                   phone: 'never',
