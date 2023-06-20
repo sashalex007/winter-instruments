@@ -17,7 +17,7 @@ export default function Category({ category, cartFunctions }) {
 
     function useProductID() {
         const { search } = useLocation();
-        const productID = useMemo(() => new URLSearchParams(search), [search]).get('id')
+        const productID = (useMemo(() => new URLSearchParams(search), [search]).get('id')).substring(0, 19)
 
         if (!productID && ((productObject.bucketedProductKeys.length === 0 || productObject.flat) && !productObject.notFound)) {
             api.getCategoryProducts(setProductObject, category.name, setError)
@@ -63,7 +63,6 @@ export default function Category({ category, cartFunctions }) {
                     </Typography>}
 
             </Grid>
-            <br></br>
         </Container>
     );
 }

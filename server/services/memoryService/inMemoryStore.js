@@ -41,6 +41,8 @@ export const memoryService = {
     },
 
     getSingleProduct: (res, productID) => {
+        productID = productID.substring(0, 19)
+        console.log(productID)
         if (!syncComplete) return memoryService.syncInProgress(res);
         if (!stripeData.flatProducts[productID]) {
             return res.json({
