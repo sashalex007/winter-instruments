@@ -34,11 +34,13 @@ export const memoryService = {
 
     getCategoryProducts: (res, category) => {
         if (!syncComplete) return memoryService.syncInProgress(res);
+        if (!stripeData.sortedProducts[category]) return res.json({ error: 'Category not found' })
         res.json(stripeData.sortedProducts[category]);
     },
 
     getSingleProduct: (res, productID) => {
         if (!syncComplete) return memoryService.syncInProgress(res);
+        if (!stripeData.flatProducts[productID]) return res.json({ error: 'Product not found' })
         res.json(stripeData.flatProducts[productID]);
     },
 
