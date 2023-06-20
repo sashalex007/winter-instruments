@@ -34,13 +34,23 @@ export const memoryService = {
 
     getCategoryProducts: (res, category) => {
         if (!syncComplete) return memoryService.syncInProgress(res);
-        if (!stripeData.sortedProducts[category]) return res.json({ error: 'Category not found' })
+        if (!stripeData.sortedProducts[category]) {
+
+        } 
         res.json(stripeData.sortedProducts[category]);
     },
 
     getSingleProduct: (res, productID) => {
         if (!syncComplete) return memoryService.syncInProgress(res);
-        if (!stripeData.flatProducts[productID]) return res.json({ error: 'Product not found' })
+        if (!stripeData.flatProducts[productID]) {
+            return res.json({
+                bucketedProductKeys: [], 
+                bucketedProductMap: {}, 
+                bucketedProductIDMap: {},
+                notFound: true,
+                flat: true
+            })
+        }
         res.json(stripeData.flatProducts[productID]);
     },
 

@@ -19,10 +19,10 @@ export default function Category({ category, cartFunctions }) {
         const { search } = useLocation();
         const productID = useMemo(() => new URLSearchParams(search), [search]).get('id')
 
-        if (!productID && (productObject.bucketedProductKeys.length === 0 || productObject.flat)) {
+        if (!productID && ((productObject.bucketedProductKeys.length === 0 || productObject.flat) && !productObject.notFound)) {
             api.getCategoryProducts(setProductObject, category.name, setError)
         }
-        else if (productID && !productObject.bucketedProductIDMap[productID]) {
+        else if (productID && !productObject.bucketedProductIDMap[productID] && !productObject.notFound) {
             api.getSingleProduct(setProductObject, productID, setError)
         }
         return productID
@@ -56,6 +56,11 @@ export default function Category({ category, cartFunctions }) {
                         productName={productObject.bucketedProductIDMap[productID]}
                         productData={productObject.bucketedProductMap[productObject.bucketedProductIDMap[productID]]}
                         cartFunctions={cartFunctions} />}
+
+                {productObject.notFound &&
+                    <Typography gutterBottom variant="h5" component="div">
+                        Product not found!
+                    </Typography>}
 
             </Grid>
             <br></br>
