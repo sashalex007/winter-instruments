@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const jsonParser = bodyParser.json();
 const app = express();
-app.set('trust proxy', 2)
+app.set('trust proxy', 2) //for rate limiter
 
 //sync with stripe
 memoryService.syncWithStripe();
@@ -20,9 +20,6 @@ memoryService.syncWithStripe();
 app.listen(port, () => {
   console.log(`Winter Instruments launched on ${port}`);
 });
-
-//proxy test
-app.get('/ip', (request, response) => response.send(request.ip))
 
 //serve static assets 
 app.use(express.static(resolve(__dirname, '../client/build')));
