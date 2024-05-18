@@ -80,6 +80,3 @@ export const memoryService = {
     }
 }
 
-//dbApi.syncWithStripe();
-//dbApi.getCategoryList();
-//dbApi.getCategoryProducts('Under-sole canting');
