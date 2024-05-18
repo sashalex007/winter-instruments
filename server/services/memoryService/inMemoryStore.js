@@ -1,4 +1,5 @@
 import { memUtilities } from "./memUtilities.js";
+import { imgService } from "./imgService.js";
 import { stripeService } from "../externalServices/stripeService.js";
 
 const stripeData = {}
@@ -11,8 +12,9 @@ export const memoryService = {
         try {
             console.log('Syncing with Stripe...');
             const { products, prices } = await stripeService.getAllProductData();
-            const productObject = memUtilities.mergeProductsAndPrices(prices, products);
+            stripeData.images = await imgService.downloadImages(products);
 
+            const productObject = memUtilities.mergeProductsAndPrices(prices, products);
             stripeData.sortedProducts = productObject.productCategoryMap;
             stripeData.flatProducts = productObject.flatProductList;
             stripeData.categoryData = { list: productObject.productCategoryList }
@@ -54,6 +56,18 @@ export const memoryService = {
             })
         }
         res.json(stripeData.flatProducts[productID]);
+    },
+
+    getImage: (res, productID) => {
+        productID = productID.substring(0, 19)
+        if (!syncComplete) return memoryService.syncInProgress(res);
+        const image = stripeData.images[productID]
+        if (image) {
+            res.writeHead(200, {'Content-Type': 'image/jpeg'});
+            res.end(image, 'binary');
+        } else {
+            res.status(404).send('Image not found');
+        }
     },
 
     getStripeData: (res) => {

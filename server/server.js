@@ -30,23 +30,27 @@ app.get("/sync", apiLimiter, (req, res) => {
 });
 
 //get test data
-app.get("/get-stripe-data", apiLimiter,(req, res) => {
+app.get("/get-stripe-data", apiLimiter, (req, res) => {
   memoryService.getStripeData(res);
 });
 
 //get category list
-app.get("/get-category-list", (req, res) => {
+app.get("/get-category-list", apiLimiter, (req, res) => {
   memoryService.getCategoryList(res);
 });
 
 //get category products
-app.post("/get-category-products", jsonParser,(req, res) => {
+app.post("/get-category-products", jsonParser, (req, res) => {
   memoryService.getCategoryProducts(res, req.body.category);
 });
 
 //get single product
 app.post("/get-single-product", jsonParser, (req, res) => {
   memoryService.getSingleProduct(res, req.body.productID);
+});
+
+app.get("/image/:id", (req, res) => {
+  memoryService.getImage(res, req.params.id)
 });
 
 //get shipping rate
