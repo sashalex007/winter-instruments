@@ -11,7 +11,9 @@ export const stripeService = {
             try {
                 const productsResponse = await stripe.products.list({ active: true, limit: 100, starting_after: startingAfter.id });
                 const pricesResponse = await stripe.prices.list({ active: true, limit: 100, starting_after: startingAfter.id });
-                products = products.concat(productsResponse.data);
+                const productsWithMetadata = productsResponse.data.filter(product => Object.keys(product.metadata).length > 0); 
+                         
+                products = products.concat(productsWithMetadata);
                 prices = prices.concat(pricesResponse.data);
                 if (productsResponse.has_more) {
                     return await helper(products, prices, productsResponse.data[productsResponse.data.length - 1]);
@@ -110,5 +112,3 @@ export const stripeService = {
     }
 
 }
-
-

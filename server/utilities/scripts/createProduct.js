@@ -1,5 +1,7 @@
 import { stripeService } from '../../services//externalServices/stripeService.js';
 
+//IMPORTANT: Upload images to stripe BEFORE hitting the /sync endpoint
+
 //createOneProdcut()
 function createOneProdcut() {
     const name = 'Dalbello cuff cam'
@@ -11,18 +13,19 @@ function createOneProdcut() {
     createSingleProduct({name, description1, description2, unit_amount, weight_oz, category})
 }
 
-//createMultipleVariantProducts()
+
+createMultipleVariantProducts()
 async function createMultipleVariantProducts() {
-    const variantData = ['0.5mm', '1mm', '2mm']
+    const variantData = ['1mm', '2mm', '3mm']
 
     for (let data of variantData) {
-        const name = `R22 heel lifter (${data})`
-        const description1 = '2x peices. Heel lifters for R22 style bindings.'
+        const name = `Tryolia heel lifter (${data})`
+        const description1 = '2x peices. Heel lifters for Tryolia bindings.'
         const description2 = 'none'
-        const unit_amount = 1000
+        const unit_amount = 1500
         const weight_oz = 4.5
         const category = 'Binding specific'
-        const name_variant = `R22 heel lifter_Thickness_${data}`
+        const name_variant = `Tryolia heel lifter_Thickness_${data}`
         await createVariantProduct({name, description1, description2, unit_amount, weight_oz, name_variant, category})
     }
 }

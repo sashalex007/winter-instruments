@@ -12,8 +12,7 @@ export const memoryService = {
         try {
             console.log('Syncing with Stripe...');
             const { products, prices } = await stripeService.getAllProductData();
-            stripeData.images = await imgService.downloadImages(products);
-
+            
             const productObject = memUtilities.mergeProductsAndPrices(prices, products);
             stripeData.sortedProducts = productObject.productCategoryMap;
             stripeData.flatProducts = productObject.flatProductList;
