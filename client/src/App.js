@@ -91,7 +91,7 @@ export default function App() {
 
               <Box sx={{ width: '100%' }}>
                 <Typography variant='body2' color='text.secondary' textAlign= 'center'>
-                  © 2024 - winterinstruments.store - All Rights Reserved.
+                  © {new Date().getFullYear()} - winterinstruments.store - All Rights Reserved.
                 </Typography>
               </Box>
 
